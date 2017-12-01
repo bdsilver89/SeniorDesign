@@ -12,9 +12,9 @@ std::vector<std::string> getParsedRecipes(void)
     while ((dp = readdir(dir)) != NULL)
     {
         std::string name = dp->d_name;
-        result.push_back(name);
+        if (name.find(".txt") != std::string::npos)
+            result.push_back(name);
     }
-    result.erase(result.begin(), result.begin() + 3);
     return result;
 }
 
