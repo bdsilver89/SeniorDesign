@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include "parser.h"
-#include "spice_library.h"
-#include "ingredient.h"
-#include "recipe.h"
+#include "recipe/parser.h"
+#include "config/spice_library.h"
+#include "recipe/ingredient.h"
+#include "recipe/recipe.h"
 
 
 Parser::Parser(void) {}

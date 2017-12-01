@@ -4,15 +4,12 @@ NAME=app
 # List of all .cpp source code files included in your program (separated by spaces):
 SRC= application/app.cc recipe/parser.cc recipe/ingredient.cc recipe/recipe.cc
 
-SRCPATH=./src/
+SRCPATH=./code/src/
 OBJ=$(addprefix $(SRCPATH), $(SRC:.cc=.o))
 
 RM=rm -f
-TYPESPATH = ./src/types
-RECIPEPATH =./src/recipe
-CONFIGPATH = ./src/config
-HWPATH  = ./src/hardware
-CPPFLAGS+= -I $(TYPESPATH) -I $(RECIPEPATH) -I $(CONFIGPATH) -I $(HWPATH) -std=c++11
+INC = ./code/Include/
+CPPFLAGS+= -I $(INC) -std=c++11
 
 
 all: $(OBJ)

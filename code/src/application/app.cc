@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
-#include "parser.h"
+#include "recipe/parser.h"
 
 
 int main(int argc, const char *argv[])

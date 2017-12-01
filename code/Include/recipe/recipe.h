@@ -5,7 +5,7 @@
 #include <string>
 #include "ingredient.h"
 
-#define RECIPE_PATH "../parsed_recipes/"
+#define RECIPE_PATH "./saved_recipes/"
 
 std::vector<std::string> getParsedRecipes(void);
 

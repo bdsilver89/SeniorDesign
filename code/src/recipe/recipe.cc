@@ -1,4 +1,4 @@
-#include "recipe.h"
+#include "recipe/recipe.h"
 #include <fstream>
 #include <iostream>
 #include <dirent.h>
@@ -11,9 +11,10 @@ std::vector<std::string> getParsedRecipes(void)
     struct dirent *dp;
     while ((dp = readdir(dir)) != NULL)
     {
-        result.push_back(dp->d_name);
+        std::string name = dp->d_name;
+        result.push_back(name);
     }
-
+    result.erase(result.begin(), result.begin() + 3);
     return result;
 }
 
@@ -43,7 +44,7 @@ void Recipe::readFile(void)
 
     else
     {
-        std::cout << "Could not open file" << std::endl;
+        std::cout << "Could not open file: " << FilePath << std::endl;
     }
 }
 
@@ -78,7 +79,7 @@ void Recipe::writeFile(Ingredient I)
 
     else
     {
-        std::cout << "Could not open file" << std::endl;
+        std::cout << "Could not save recipe" << std::endl;
     }
 }
 
