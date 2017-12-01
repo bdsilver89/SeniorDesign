@@ -212,11 +212,14 @@ void Parser::parseNewFile(std::string inputFilePath)
 
 
 
-void Parser::parseSavedFile(void)
+void Parser::parseSavedFile(std::string input)
 {
     std::vector<std::string> files = getParsedRecipes();
     for(std::vector<std::string>::const_iterator s = files.begin(); s != files.end(); ++s)
     {
-        std::cout << *s << std::endl;
+        if ((*s).find(input) != std::string::npos)
+            std::cout << "Found the saved recipe" << std::endl;
+            
     }
+
 }

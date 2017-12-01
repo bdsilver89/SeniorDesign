@@ -20,6 +20,10 @@ private:
 public:
     Recipe(std::string n);
 
+    ~Recipe();
+
+    std::string getName(void);
+
     void readFile(void);
     
     /**
@@ -31,8 +35,6 @@ public:
     void clearFile(void);
 
     void writeFile(Ingredient I);
-
-    void deleteFile(void);
 
     void changeRecipeName(std::string n);
 

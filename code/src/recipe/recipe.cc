@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <dirent.h>
+#include <cstdio>
 
 
 std::vector<std::string> getParsedRecipes(void)
@@ -26,6 +27,21 @@ Recipe::Recipe(std::string n)
     FileName = n;
     FilePath = RECIPE_PATH + n + ".txt";
 }
+
+
+
+Recipe::~Recipe(void)
+{
+    //std::remove(FilePath);
+}
+
+
+
+std::string Recipe::getName(void)
+{
+    return FileName;
+}
+
 
 
 void Recipe::readFile(void)
@@ -83,12 +99,6 @@ void Recipe::writeFile(Ingredient I)
     }
 }
 
-
-
-void Recipe::deleteFile(void)
-{
-
-}
 
 
 

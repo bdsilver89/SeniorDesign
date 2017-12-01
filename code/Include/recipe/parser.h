@@ -23,7 +23,7 @@ public:
 
 	void parseNewFile(std::string inputFilePath);
 
-    void parseSavedFile(void);
+    void parseSavedFile(std::string input);
 };
 
 
