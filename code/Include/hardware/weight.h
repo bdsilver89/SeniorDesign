@@ -1,7 +1,9 @@
 #ifndef WEIGHT_H
 #define WEIGHT_H
 
-class weight
+#include "hardware/i2c.h"
+
+class weight : public I2CDevice
 {
 public:
     weight();

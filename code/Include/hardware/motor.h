@@ -1,7 +1,9 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
-class motor
+#include "hardware/i2c.h"
+
+class motor : public I2CDevice
 {
 public:
     motor();

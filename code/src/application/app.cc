@@ -2,6 +2,8 @@
 #include <string>
 #include <stdlib.h>
 #include "recipe/parser.h"
+#include "hardware/motor.h"
+#include "hardware/weight.h"
 
 
 int main(int argc, const char *argv[])

@@ -1,26 +1,26 @@
 #ifndef I2C_H
 #define I2C_H
-/*void i2c_init(void);
 
-void i2c_read(char** message, int length);
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <linux/i2c-dev.h>
 
-void  i2c_write(char** message, int length);
-*/
 
-// OR
-
-/*
-class i2c
+class I2CDevice
 {
 private:
+	unsigned char DeviceAddress;
 
 public:
-    i2c();
+	I2CDevice(unsigned char addr);
+	
+	~I2CDevice(void);
 
-    i2c(int addr);
+	void setAddress(unsigned char addr);
 
-}
-*/
+	void startRead(char* data, int length);
 
-
+	void startWrite(char* data, int length);
+};
 #endif
