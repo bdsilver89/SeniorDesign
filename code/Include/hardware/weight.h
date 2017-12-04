@@ -1,15 +1,15 @@
 #ifndef WEIGHT_H
 #define WEIGHT_H
 
-#include "hardware/i2c.h"
+#include <cstdint>
+// #include "hardware/i2c.h"
 
-class weight : public I2CDevice
+class weight
 {
 public:
-    weight();
+    weight(uint8_t addr);
 
     int readSensor(void);
-
     
 };
 
