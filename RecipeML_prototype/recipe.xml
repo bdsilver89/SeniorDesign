@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipeml PUBLIC "-//FormatData//DTD RecipeML 0.5//EN"
+	"http://www.formatdata.com/recipeml.recipeml.dtd">
+<?xml-stylesheet href="dessert1.css" type="text/css"?>
+<recipeml version="0.5">
+	<recipe>
+		<head>
+			<title>My Favorite Test Recipe</title>
+		</head>
+		<ingredients>
+			<ing>
+				<amt>
+					<qty>2</qty>
+					<unit>cups</unit>
+				</amt>
+				<item>Ba</item>
+			</ing>
+		</ingredients>
+		<directions>
+			<step>Boy is it fun to say butter in french</step>
+			<step>Say butter in french</step>
+		</directions>
+	</recipe>
+</recipeml>
