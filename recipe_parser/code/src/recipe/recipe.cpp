@@ -89,7 +89,7 @@ void Recipe::writeFile(Ingredient I)
     {
         File << I.getType() << "\n";
         File << I.getAmount() << "\n";
-        File << I.getMeasurementStr() << "\n\n"; 
+        File << I.getMeasurement() << "\n\n"; 
         File.close();
     }
 
