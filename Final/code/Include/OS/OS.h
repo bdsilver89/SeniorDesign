@@ -1,7 +1,8 @@
 #ifndef OS_H
 #define OS_H
 
+void OSInitialize(void);
 
-void OSTickInitialize(void);
+void OSRun(void);
 
 #endif

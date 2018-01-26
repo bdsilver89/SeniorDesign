@@ -1,7 +1,14 @@
 #include "TestTask/task_a.h"
 #include <iostream>
+#include <cstdint>
+#include <stdlib.h>
 
-void TestTask_A(void)
+uint32_t x = 0;
+
+void TestTask_A(void *input_args, void *output_args)
 {
-   std::cout << "Henlo task A" << std::endl;
+   std::cout << "Task A starting" << std::endl;
+   *((uint32_t*)output_args) = x;
+   x++;
+   std::cout << "Task A ending" << std::endl;
 }

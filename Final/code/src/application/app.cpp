@@ -3,7 +3,7 @@
 
 int main()
 {
-    OSTickInitialize();
-    while(1) {}
+    OSInitialize();
+    OSRun();
     return 0;
 }

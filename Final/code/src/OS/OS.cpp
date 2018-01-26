@@ -1,19 +1,46 @@
 #include "OS/OS.h"
-#include "OS/tasks.h"
+#include "OS/OSTasks.h"
+#include <cstdint>
 #include <time.h>
 #include <signal.h>
 #include <iostream>
 
-unsigned int RTOSTickCtr = 0;
+uint32_t RTOSTickCtr = 0;
+uint8_t  RTOSTimerFlag = 0;
+
+void OSRun(void)
+{
+    while(1)
+    {
+        RTOSTickCtr++;
+        if (RTOSTickCtr % 10 == 0)
+        {
+            for (int i = 0; i < NUM_TASKS; i++)
+            {
+                (void)Task_List[i].RTOSTask(Task_List[i].RTOSTaskInputArg,
+                                            Task_List[i].RTOSTaskOutputArg);
+                std::cout << std::endl;
+            }
+            std::cout << "********************************" << std::endl;
+        }
+        RTOSTimerFlag = 0;
+        while(RTOSTimerFlag == 0)
+        {
+            nanosleep((const struct timespec[]){{0, 1}}, NULL);
+        }
+    }
+}
 
 void RTOSTmrSignal(int signum)
 {
-    RTOSTickCtr++;
-    if (RTOSTickCtr % 10 == 0)
+    if(RTOSTimerFlag == 1)
     {
-        for (int i = 0; i < NUM_TASKS; i++)
-            task_ptr[i]();
-        std::cout << std::endl;
+        std::cout << "OS Timer ticked before task processing done" << std::endl;
+    }
+
+    else
+    {
+        RTOSTimerFlag = 1;
     }
 }
 
@@ -39,3 +66,10 @@ void OSTickInitialize(void)
     // Start the timer
     timer_settime(RTOSTmr, 0, &time_value, NULL);
 }
+
+
+void OSInitialize(void)
+{
+    OSTickInitialize();
+}
+
