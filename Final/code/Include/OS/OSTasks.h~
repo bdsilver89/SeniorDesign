@@ -19,7 +19,7 @@ typedef struct task
 
 //List of all Initialization tasks to run BEFORE the OS cycle starts
 RTOS_TASK Init_List[NUM_INIT] = {
-    {&Motor_Init, 			&(MemMap)}
+    {&Motor_Update, 			&(MemMap)}
 };
 
 

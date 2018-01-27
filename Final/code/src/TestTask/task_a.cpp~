@@ -15,6 +15,6 @@ void TestTask_A(struct RTOS_SHARED_MEM* RTOS_MEM,
         struct TaskA_MemMap* tempMemA = &((*RTOS_MEM).A_Mem);
         (*tempMemA).var1 = 12;
         // std::cout << ((*RTOS_MEM).A_Mem).var1 << std::endl;
-        std::cout << "Task A ending\n" << std::endl;
+        std::cout << "Task A ending" << std::endl;
     }
 }

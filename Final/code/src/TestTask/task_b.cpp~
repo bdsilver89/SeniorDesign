@@ -10,6 +10,6 @@ void TestTask_B(struct RTOS_SHARED_MEM* RTOS_MEM,
     else
     {
         std::cout << "Task B starting" << std::endl;
-        std::cout << "Task B ending\n" << std::endl;
+        std::cout << "Task B ending" << std::endl;
     }
 }
