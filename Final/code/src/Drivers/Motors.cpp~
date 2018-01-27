@@ -1,42 +1,68 @@
 #include "Drivers/Motors.h"
 #include "OS/OSMemMap.h"
 #include <iostream>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <linux/i2c-dev.h>
+#include <math.h>
+#include <wiringPiI2C.h>
 
-int32_t file_i2c;
-int32_t length;
-uint8_t	buffer[32] = {0};
+#define	PCA9685_MODE1				0x0
+#define	PCA9685_PRESCALE		0xFE
 
-void Motor_Init(struct RTOS_SHARED_MEM* RTOS_MEM,
-											  uint32_t RTOSTime)
+#define LED0_ON_L		0x6
+#define LED0_ON_H		0x7
+#define LED0_OFF_L	0x8
+#define LED0_OFF_H	0x9
+
+int32_t fd;
+
+void setPWMFreq(float freq)
 {
-	struct Motors_MemMap* MotorMem_ptr = &((*RTOS_MEM).MotorDriverMem);
-	uint8_t *filename = (uint8_t*)"/dev/i2c-1";
-	/* if ((file_i2c = open(filename, O_RDWR)) < 0)
-	{
-		// Error handling
-		std::cout << "ERROR: Failed to initialize motor I2C bus" << std::endl;	
-		return;
-	} */
-
-		
+	freq *= 0.9;		// Adafruit corrects for an overshoot
+	float prescaleval = 25000000;
+	prescaleval /= 4096;
+	prescaleval/= freq;
+	prescaleval -= 1;
+	uint8_t prescale = floor(prescaleval + 0.5);
 	
-	(*MotorMem_ptr).i2caddr = 0x40;
-	if (ioctl(file_i2c, I2C_SLAVE, (*MotorMem_ptr).i2caddr) < 0)
-	{
-		// Error handling
-		std::cout << "ERROR: Failed to acquire Motor I2C bus and/or talk to slave" << std::endl;
-		return;
-	}
-
+	uint8_t oldmode = wiringPiI2CReadReg8(fd, PCA9685_MODE1);
+	uint8_t newmode = (oldmode & 0x7F) | 0x10;	// sleep
+	wiringPiI2CWriteReg8(fd, PCA9685_MODE1, newmode);
+	wiringPiI2CWriteReg8(fd, PCA9685_PRESCALE, prescale);
+	wiringPiI2CWriteReg8(fd, PCA9685_MODE1, oldmode);
+	// delay(5);
+	wiringPiI2CWriteReg8(fd, PCA9685_MODE1, oldmode | 0xA0);
 }
 
 
+
+void setPWM(uint8_t num, uint16_t on, uint16_t off)
+{
+	wiringPiI2CWriteReg8(fd, (LED0_ON_L + 4*num), (on & 0x00FF));
+	wiringPiI2CWriteReg8(fd, (LED0_ON_H + 4*num), ((on>>8) & 0xF));
+	wiringPiI2CWriteReg8(fd, (LED0_OFF_L + 4*num), (off & 0x00FF));
+	wiringPiI2CWriteReg8(fd, (LED0_OFF_H + 4*num), ((off>>8) & 0xF));
+}
+
+
+
+void Motor_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
+{
+	std::cout << "Motor init task starting" << std::endl;
+	struct Motors_MemMap* MotorMem_ptr = &((*RTOS_MEM).MotorDriverMem);
+	(*MotorMem_ptr).i2caddr = 0x40;
+	fd = wiringPiI2CSetup((*MotorMem_ptr).i2caddr);
+	if (fd < 0)
+	{
+		*err = -1;
+		return;
+	}
+	setPWMFreq(1000);
+	std::cout << "Motor init task ending\n"  << std::endl;
+}
+
+
+
 void Motor_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
-											  uint32_t RTOSTime)
+							uint32_t RTOSTime)
 {
 	if (RTOSTime % 10 != 0)
 		return;
@@ -47,13 +73,10 @@ void Motor_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 		struct Motors_MemMap* MotorMem_ptr = &((*RTOS_MEM).MotorDriverMem);
 		struct Controller_MemMap* ControllerMem_ptr = &((*RTOS_MEM).ControllerMem);
 		
-		// Motor speed represented by 0 = 1.5ms, 127=1.7ms, -128=1.3ms
-		// float control_val = (float)((*ControllerMem_ptr).Motor0_Speed);
-		// (*MotorMem_ptr).high_pulse = 1.3f + (control_val +128.0f) * (0.0015625f); 
-		
-		
-		
-		std::cout << "Motor 0 high pulse= " << (*MotorMem_ptr).high_pulse << std::endl;
+		for (int i = 0; i < 5; i++)
+		{
+				setPWM(i, ((*ControllerMem_ptr).Motor_Speeds[i]), (4096 - (*ControllerMem_ptr).Motor_Speeds[i]));
+		}
 			
 		std::cout << "Motor update task ending\n"  << std::endl;
 	}

@@ -10,8 +10,7 @@ struct Motors_MemMap
    uint16_t		low_pulse;
 };
 
-void Motor_Init(struct RTOS_SHARED_MEM* RTOS_MEM,
-											  uint32_t RTOSTime);
+void Motor_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err);
 											  
 void Motor_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 											  uint32_t RTOSTime);

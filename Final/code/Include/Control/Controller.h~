@@ -5,7 +5,7 @@
 
 struct Controller_MemMap
 {
-	int8_t		Motor0_Speed;
+	uint16_t		Motor_Speeds[16];
 };
 
 void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM,

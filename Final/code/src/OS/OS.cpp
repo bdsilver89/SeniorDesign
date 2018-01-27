@@ -21,8 +21,8 @@ void OSRun(void)
         }
         RTOSTimerFlag = 0;
         while(RTOSTimerFlag == 0)
-        {
-            nanosleep((const struct timespec[]){{0, 1}}, NULL);
+        { 
+				//service GUI until time runs out then do the output update      
         }
     }
 }
@@ -66,10 +66,17 @@ void OSTickInitialize(void)
 
 void OSTaskInitialize(void)
 {
+	uint8_t err_val;
 	for (int i = 0; i < NUM_INIT; i++)
 	{
-		(void)Init_List[i].RTOSTask(Init_List[i].MEM, RTOSTickCtr);
+		(void)Init_List[i].RTOSInitTask(Init_List[i].MEM, &err_val);
+		if (err_val == 1)
+		{
+			std::cout << "ERROR: Task initialization failed." << std::endl;
+			exit(1);		
+		}
 	}
+	std::cout << "----------------------------------------" << std::endl;
 }
 
 

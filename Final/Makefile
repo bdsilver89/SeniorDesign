@@ -14,7 +14,7 @@ OBJ=$(addprefix $(SRCPATH), $(SRC:.cc=.o))
 
 RM=rm -f
 INC = ./code/Include/
-CPPFLAGS+= -I $(INC) -std=c++11 -lrt
+CPPFLAGS+= -I $(INC) -std=c++11 -lrt -lwiringPi
 
 
 all: $(OBJ)
