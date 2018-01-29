@@ -6,6 +6,9 @@
 #include <iostream>
 #include <stdlib.h>
 
+// #define ENABLE_DEBUG_CONSOLE
+
+
 uint32_t RTOSTickCtr = 0;
 uint8_t  RTOSTimerFlag = 0;
 
@@ -31,7 +34,9 @@ void RTOSTmrSignal(int signum)
 {
     if(RTOSTimerFlag == 1)
     {
-        std::cout << "OS Timer ticked before task processing done" << std::endl;
+		#ifdef ENABLE_DEBUG_CONSOLE
+			std::cout << "OS Timer ticked before task processing done" << std::endl;
+		#endif
     }
 
     else
@@ -66,17 +71,25 @@ void OSTickInitialize(void)
 
 void OSTaskInitialize(void)
 {
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Starting initialization" << std::endl;
+	#endif
 	uint8_t err_val;
 	for (int i = 0; i < NUM_INIT; i++)
 	{
 		(void)Init_List[i].RTOSInitTask(Init_List[i].MEM, &err_val);
 		if (err_val == 1)
 		{
-			std::cout << "ERROR: Task initialization failed." << std::endl;
+			#ifdef ENABLE_DEBUG_CONSOLE
+				std::cout << "ERROR: Task initialization failed." << std::endl;
+			#endif
 			exit(1);		
 		}
 	}
-	std::cout << "----------------------------------------" << std::endl;
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Finished initilization" << std::endl;
+		std::cout << "---------------------------------" << std::endl;
+	#endif
 }
 
 

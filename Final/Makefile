@@ -2,12 +2,10 @@
 NAME=app
 
 # List of all .cpp source code files included in your program (separated by spaces):
-SRC = application/app.cpp		\
-      OS/OS.cpp									\
-      TestTask/task_a.cpp			\
-      TestTask/task_b.cpp			\
-      Drivers/Motors.cpp				\
-      Control/Controller.cpp
+SRC =	application/app.cpp		\
+		OS/OS.cpp				\
+		Control/Controller.cpp	\
+		Drivers/Motors.cpp
 
 SRCPATH=./code/src/
 OBJ=$(addprefix $(SRCPATH), $(SRC:.cc=.o))

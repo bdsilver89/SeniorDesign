@@ -3,10 +3,11 @@
 
 #include <cstdint>
 
-#define NUM_MOTORS 5
+#define NUM_MOTORS 1
 
 struct Controller_MemMap
 {
+	uint8_t			Motor_Enable[NUM_MOTORS];
 	uint16_t		Motor_Speeds[NUM_MOTORS];
 };
 
