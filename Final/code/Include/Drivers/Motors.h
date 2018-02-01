@@ -16,5 +16,4 @@ void Motor_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 											  uint32_t RTOSTime);
 
 
-
 #endif

@@ -4,6 +4,7 @@
 #include "TestTask/task_a.h"
 #include "TestTask/task_b.h"
 #include "Drivers/Motors.h"
+#include "Drivers/Weight.h"
 
 struct RTOS_SHARED_MEM
 {
