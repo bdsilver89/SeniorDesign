@@ -17,9 +17,9 @@ void Weight_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	#endif
 	struct Weight_MemMap* WeightMem_ptr = &((*RTOS_MEM).WeightDriverMem);
 
-	(*WeightMem_ptr).i2caddr = 0x00;	// Replace with the actual address of the ADC
+	(*WeightMem_ptr).i2caddr = 0x90;	// Need to connect the ADDR pin to GND
 	wiringPiSetupSys();
-	sensor = wiringPiI2CSetup((*WeightMem_ptr).i2caddr);
+	// sensor = wiringPiI2CSetup((*WeightMem_ptr).i2caddr);
 	if (sensor < 0)
 	{
 		*err = 1;

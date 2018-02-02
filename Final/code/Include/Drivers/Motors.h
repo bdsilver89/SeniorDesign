@@ -6,14 +6,13 @@
 struct Motors_MemMap
 {
 	uint8_t		i2caddr;
-   uint16_t		high_pulse;
-   uint16_t		low_pulse;
 };
+#define MOTORS_MEMMAP_SIZE	sizeof(Motors_MemMap)
+
 
 void Motor_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err);
 											  
-void Motor_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
-											  uint32_t RTOSTime);
+void Motor_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime);
 
 
 #endif

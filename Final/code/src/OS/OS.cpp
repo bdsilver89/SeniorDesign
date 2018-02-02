@@ -8,30 +8,45 @@
 
 // #define ENABLE_DEBUG_CONSOLE
 
-
+// variable to hold sum total of RTOS clock ticks (1 tick = 1 timer interrupt)
 uint32_t RTOSTickCtr = 0;
+
+// flag to determine if the RTOS timer has overflowed yet or not
 uint8_t  RTOSTimerFlag = 0;
 
+
+
+// main OS loop
 void OSRun(void)
 {
     while(1)
     {
         RTOSTickCtr++;
+        
+        // Complete all tasks from the update list
         for (int i = 0; i < NUM_TASKS; i++)
         {
-            (void)Task_List[i].RTOSTask(Task_List[i].MEM,
-                                        RTOSTickCtr);
+            (void)Task_List[i].RTOSTask(Task_List[i].MEM, RTOSTickCtr);
         }
+        
+        // Clear timer overflow flag
         RTOSTimerFlag = 0;
+        
+        // Wait for timer reset by servicing background tasks
         while(RTOSTimerFlag == 0)
         { 
-				//service GUI until time runs out then do the output update      
+			// background tasks like GUI servicing
         }
     }
 }
 
+
+
+
+// Signaled through SIGALRM to change the timer overflow state
 void RTOSTmrSignal(int signum)
 {
+	// Timer has overflowed before task list clears flag
     if(RTOSTimerFlag == 1)
     {
 		#ifdef ENABLE_DEBUG_CONSOLE
@@ -39,6 +54,7 @@ void RTOSTmrSignal(int signum)
 		#endif
     }
 
+	// Task list completed and cleared flag
     else
     {
         RTOSTimerFlag = 1;
@@ -46,6 +62,8 @@ void RTOSTmrSignal(int signum)
 }
 
 
+
+// setup the RTOS timer
 void OSTickInitialize(void)
 {
     timer_t RTOSTmr;
@@ -69,15 +87,20 @@ void OSTickInitialize(void)
 }
 
 
+// call any initialization tasks before the RTOS loop starts
 void OSTaskInitialize(void)
 {
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "Starting initialization" << std::endl;
 	#endif
 	uint8_t err_val;
+	
+	// run all init tasks from the list
 	for (int i = 0; i < NUM_INIT; i++)
 	{
 		(void)Init_List[i].RTOSInitTask(Init_List[i].MEM, &err_val);
+		
+		// error catching
 		if (err_val == 1)
 		{
 			#ifdef ENABLE_DEBUG_CONSOLE

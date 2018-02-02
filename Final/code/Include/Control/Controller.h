@@ -3,13 +3,31 @@
 
 #include <cstdint>
 
-#define NUM_MOTORS 1
+#define NUM_MOTORS 2
+
+struct PID_Controller
+{
+	int16_t			PID_val[NUM_MOTORS];			
+	uint16_t		Target_Positions[NUM_MOTORS];
+	uint16_t		Current_Positions[NUM_MOTORS];
+	int16_t			Error[NUM_MOTORS];
+	int16_t			Last_Error[NUM_MOTORS];
+	int16_t			Integral[NUM_MOTORS];
+	int16_t			Derivative[NUM_MOTORS];
+	int16_t			Kp[NUM_MOTORS];
+	int16_t			Ki[NUM_MOTORS];
+	int16_t			Kd[NUM_MOTORS];	
+};
+#define PID_CONTROLLER_SIZE	sizeof(PID_Controller)
+
 
 struct Controller_MemMap
 {
-	uint8_t			Motor_Enable[NUM_MOTORS];
-	uint16_t		Motor_Speeds[NUM_MOTORS];
+	uint8_t					Motor_Enable[NUM_MOTORS];
+	uint16_t				Motor_Speeds[NUM_MOTORS];
+	struct PID_Controller	PID;
 };
+#define CONTROLLER_MEMMAP_SIZE	sizeof(Controller_MemMap)
 
 void Controller_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err);
 
