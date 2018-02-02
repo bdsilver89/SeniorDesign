@@ -32,7 +32,7 @@ typedef struct init
 RTOS_INIT_TASK Init_List[NUM_INIT] = {
     {&Controller_Init, 		&(MemMap)},
     {&Motor_Init, 			&(MemMap)},
-    {&Weight_Init,			&(MemMao)}
+    {&Weight_Init,			&(MemMap)}
 };
 
 

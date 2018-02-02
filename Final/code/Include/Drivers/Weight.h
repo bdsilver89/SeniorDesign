@@ -19,5 +19,3 @@ void Weight_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 
 
 #endif
-
-#endif
