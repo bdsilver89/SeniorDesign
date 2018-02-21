@@ -4,6 +4,13 @@
 #include <cstdint>
 
 
+#define ADS1015_REG_POINTER_MASK		0x03
+#define ADS1015_REG_POINTER_CONVERT		0x00
+#define ADS1015_REG_POINTER_CONFIG		0x01
+#define ADS1015_REG_POINTER_LOWTHRESH	0x02
+#define ADS1015_REG_POINTER_HITHRESH	0x03
+
+
 
 struct Weight_MemMap
 {
