@@ -62,7 +62,7 @@ void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 		
 		// Uhh these aren't the same and thats a problem
 		(*ControllerMem_ptr).Motor_Speeds[0] = 390;
-		(*ControllerMem_ptr).Motor_Speeds[1] = 388;
+		(*ControllerMem_ptr).Motor_Speeds[1] = 387;
 		
 		
 		// PID Control Loop
