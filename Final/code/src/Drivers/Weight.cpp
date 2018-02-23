@@ -1,6 +1,7 @@
 #include "Drivers/Weight.h"
 #include "OS/OSMemMap.h"
 #include <iostream>
+#include <unistd.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
@@ -47,7 +48,16 @@ void Weight_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	 *     Active low comparator
 	 *     Latching and asserting comparator
 	 */
-	wiringPiI2CWriteReg16(sensor, ADS1015_REG_POINTER_CONFIG, (((0x0483 & 0x00FF) << 8) | ((0x0483 & 0xFF00) >> 8)));
+	uint16_t config = ADS1015_REG_CONFIG_CQUE_NONE    | // Disable the comparator (default val)
+                      ADS1015_REG_CONFIG_CLAT_NONLAT  | // Non-latching (default val)
+                      ADS1015_REG_CONFIG_CPOL_ACTVLOW | // Alert/Rdy active low   (default val)
+                      ADS1015_REG_CONFIG_CMODE_TRAD   | // Traditional comparator (default val)
+                      ADS1015_REG_CONFIG_DR_1600SPS   | // 1600 samples per second (default)
+                      ADS1015_REG_CONFIG_MODE_SINGLE  | // Single-shot mode (default)
+                      ADS1015_REG_CONFIG_PGA_4_096V	  |	// +-4.096V, Gain = 1
+                      ADS1015_REG_CONFIG_MUX_SINGLE_0;	// MUX0 Single-Ended
+						
+	wiringPiI2CWriteReg16(sensor, ADS1015_REG_POINTER_CONFIG, (((config & 0x00FF) << 8) | ((config & 0xFF00) >> 8)));
 	
 	
 	// Verfiy registers
@@ -101,13 +111,23 @@ void Weight_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 		//task update code
 		struct Weight_MemMap* WeightMem_ptr = &((*RTOS_MEM).WeightDriverMem);
 		
+		uint16_t config_val = wiringPiI2CReadReg16(sensor, ADS1015_REG_POINTER_CONFIG);
+		config_val = ((((config_val & 0x00FF) << 8)   | ((config_val & 0xFF00) >> 8)));
+		config_val |= ADS1015_REG_CONFIG_OS_SINGLE;
+		wiringPiI2CWriteReg16(sensor, ADS1015_REG_POINTER_CONFIG, (((config_val & 0x00FF) << 8) | ((config_val & 0xFF00) >> 8)));
+		
+		usleep(1000);
+	
+		
 		int16_t raw = wiringPiI2CReadReg16(sensor, ADS1015_REG_POINTER_CONVERT);
-		raw  = ((((raw & 0x00FF) << 8)  | ((raw & 0xFF00) >> 8)));
+		raw = ((((raw & 0x00FF) << 8)  | ((raw & 0xFF00) >> 8)));
+		raw = raw >> 4;
 
 		#ifdef ENABLE_DEBUG_CONSOLE		
 			std::cout << "\tADC raw value: " << std::dec << raw << ", " << std::hex << raw << std::endl;
 			std::cout << "\tADC voltage: " << 4.096 * double(raw)/2048.0 << std::endl;
 		#endif
+		
 
 		#ifdef ENABLE_DEBUG_CONSOLE
 			//std::cout << "Weight update task ending" << std::endl;
