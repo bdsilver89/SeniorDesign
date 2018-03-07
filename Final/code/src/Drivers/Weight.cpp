@@ -7,10 +7,6 @@
 
 #define ENABLE_DEBUG_CONSOLE
 
-#ifdef ENABLE_DEBUG_CONSOLE
-	#include <bitset>
-#endif
-
 /* NOTE:
  * WiringPiI2C has a fun bug for writing to 16 bit registers
  * that flips the endianness
@@ -18,7 +14,6 @@
  * modified. See this post for more info:
  * https://www.raspberrypi.org/forums/viewtopic.php?f=33&t=122923
  */
-
 
 
 int32_t sensor;
@@ -31,7 +26,10 @@ void Weight_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	#endif
 	struct Weight_MemMap* WeightMem_ptr = &((*RTOS_MEM).WeightDriverMem);
 
-	(*WeightMem_ptr).i2caddr = 0x48;	// Need to connect the ADDR pin to GND
+	(*WeightMem_ptr).i2caddr    = 0x48;	// Need to connect the ADDR pin to GND
+	(*WeightMem_ptr).ADC_scale  = 975;	// Datasheet value for 780g load cell
+	(*WeightMem_ptr).ADC_offset = 0;	// Need to update in calibrate routine
+
 	wiringPiSetupSys();
 	sensor = wiringPiI2CSetup((*WeightMem_ptr).i2caddr);
 	if (sensor < 0)
@@ -54,7 +52,7 @@ void Weight_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
                       ADS1015_REG_CONFIG_CMODE_TRAD   | // Traditional comparator (default val)
                       ADS1015_REG_CONFIG_DR_1600SPS   | // 1600 samples per second (default)
                       ADS1015_REG_CONFIG_MODE_SINGLE  | // Single-shot mode (default)
-                      ADS1015_REG_CONFIG_PGA_4_096V	  |	// +-4.096V, Gain = 1
+                      ADS1015_REG_CONFIG_PGA_2_048V	  |	// +-2.048V, Gain = 2
                       ADS1015_REG_CONFIG_MUX_SINGLE_0;	// MUX0 Single-Ended
 						
 	wiringPiI2CWriteReg16(sensor, ADS1015_REG_POINTER_CONFIG, (((config & 0x00FF) << 8) | ((config & 0xFF00) >> 8)));
@@ -72,18 +70,10 @@ void Weight_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 		lothresh_val = ((((lothresh_val & 0x00FF) << 8) | ((lothresh_val & 0xFF00) >> 8)));
 		hithresh_val = ((((hithresh_val & 0x00FF) << 8) | ((hithresh_val & 0xFF00) >> 8)));
 
-		
 		std::cout << "\tConvert:  " << std::hex << convert_val  << std::endl;
 		std::cout << "\tConfig:   " << std::hex << config_val   << std::endl;
 		std::cout << "\tLothresh: " << std::hex << lothresh_val << std::endl;
 		std::cout << "\tHithresh: " << std::hex << hithresh_val << std::endl;
-		
-		/*
-		std::cout << "\tConvert:  " << std::bitset<16>(convert_val)  << std::endl;
-		std::cout << "\tConfig:   " << std::bitset<16>(config_val)   << std::endl;
-		std::cout << "\tLothresh: " << std::bitset<16>(lothresh_val) << std::endl;
-		std::cout << "\tHithresh: " << std::bitset<16>(hithresh_val) << std::endl;		
-		*/
 	#endif
 
 
@@ -91,22 +81,23 @@ void Weight_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 		std::cout << "Weight init task ending\n"  << std::endl;
 	#endif
 }
+
 	
 
 void Weight_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 											  uint32_t RTOSTime)
 {
 	
+	/*
 	if (RTOSTime % 10 != 0)
 		return;
 		
 	else
 	{
-	
+	*/
 		#ifdef ENABLE_DEBUG_CONSOLE
 			//std::cout << "Weight update task starting" << std::endl;
 		#endif
-
 
 		//task update code
 		struct Weight_MemMap* WeightMem_ptr = &((*RTOS_MEM).WeightDriverMem);
@@ -121,16 +112,20 @@ void Weight_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 		
 		int16_t raw = wiringPiI2CReadReg16(sensor, ADS1015_REG_POINTER_CONVERT);
 		raw = ((((raw & 0x00FF) << 8)  | ((raw & 0xFF00) >> 8)));
-		raw = raw >> 4;
+		(*WeightMem_ptr).raw_ADC = raw >> 4;
+		(*WeightMem_ptr).voltage_ADC = 2.048 * double((*WeightMem_ptr).raw_ADC)/2048.0;
+
+		// TODO: Add a scale and offset calibration routine
+		(*WeightMem_ptr).weight = (((*WeightMem_ptr).ADC_scale) * ((*WeightMem_ptr).voltage_ADC)) + (*WeightMem_ptr).ADC_offset;
 
 		#ifdef ENABLE_DEBUG_CONSOLE		
-			std::cout << "\tADC raw value: " << std::dec << raw << ", " << std::hex << raw << std::endl;
-			std::cout << "\tADC voltage: " << 4.096 * double(raw)/2048.0 << std::endl;
+			std::cout << "\tADC raw value: " << std::dec << (*WeightMem_ptr).raw_ADC;
+			std::cout << ", " << std::hex << (*WeightMem_ptr).raw_ADC << std::endl;
+			std::cout << "\tADC voltage: " << (*WeightMem_ptr).voltage_ADC << std::endl;
 		#endif
 		
-
 		#ifdef ENABLE_DEBUG_CONSOLE
 			//std::cout << "Weight update task ending" << std::endl;
 		#endif
-	}
+	//}
 }

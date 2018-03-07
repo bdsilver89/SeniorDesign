@@ -72,8 +72,12 @@
 struct Weight_MemMap
 {
 	uint8_t		i2caddr;
-	uint16_t	weight;
-	uint16_t	weight_LUT[2];		// some sort of LUT for weight/teaspoon?
+	int16_t 	ADC_offset;
+	uint16_t 	ADC_scale:
+	uint16_t	raw_ADC;
+	double 		voltage_ADC;
+	double 		weight;
+	uint16_t	weight_LUT[2];		// some sort of LUT for weight/teaspoon? -> not sure if belong here?
 };
 #define WEIGHT_MEMMAP_SIZE	sizeof(Weight_MemMap)
 
