@@ -6,7 +6,7 @@
 #include <iostream>
 #include <stdlib.h>
 
-// #define ENABLE_DEBUG_CONSOLE
+#define ENABLE_DEBUG_CONSOLE
 
 // variable to hold sum total of RTOS clock ticks (1 tick = 1 timer interrupt)
 uint32_t RTOSTickCtr = 0;
