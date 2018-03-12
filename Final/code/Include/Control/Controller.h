@@ -29,8 +29,21 @@ struct Controller_MemMap
 };
 #define CONTROLLER_MEMMAP_SIZE	sizeof(Controller_MemMap)
 
+
+/**
+ * [Controller_Init description]
+ * @param RTOS_MEM [description]
+ * @param err      [description]
+ */
 void Controller_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err);
 
+
+
+/**
+ * [Controller_Update description]
+ * @param RTOS_MEM [description]
+ * @param RTOSTime [description]
+ */
 void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime);
 
 

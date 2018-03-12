@@ -4,12 +4,30 @@
 #include <cstdint>
 #include <vector>
 #include <string>
-// #include "recipe/ingredient.h"
-
-#define RECIPE_PATH "./../../../saved_recipes/"
+#include "Recipe/ingredient.h"
 
 
-struct 
+struct Parser_MemMap
+{
+	uint8_t		temp;
+};
+
+
+/**
+ * [Parser_Init description]
+ * @param RTOS_MEM [description]
+ * @param err      [description]
+ */
+void Parser_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err);
+	
+
+
+/**
+ * [Parser_Update description]
+ * @param RTOS_MEM [description]
+ * @param RTOSTime [description]
+ */
+void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime);
 
 
 
@@ -18,10 +36,23 @@ class Parser
 public:
     Parser(void);
  
- 	// std::vector<Ingredient> parseFile(std::string fileName);
+ 	/**
+ 	 * [parseFile description]
+ 	 * @param fileName [description]
+ 	 * @param IngList  [description]
+ 	 * @return         [description]
+ 	 */
+ 	std::vector<Ingredient> parseFile(std::string fileName);
 
- 	// void writeFile(std::string fileName, std::vector<Ingredient> IngList);
+ 	/**
+ 	 * [writeFile description]
+ 	 * @param fileName [description]
+ 	 * @param IngList  [description]
+ 	 */
+ 	void writeFile(std::string fileName, std::vector<Ingredient> IngList);
 };
 
+
+extern Parser parser;
 
 #endif

@@ -9,8 +9,21 @@ struct UI_MemMap
 };
 #define UI_MEMMAP_SIZE	sizeof(UI_MemMap)
 
+
+/**
+ * [UI_Init description]
+ * @param RTOS_MEM [description]
+ * @param err      [description]
+ */
 void UI_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err);
-											  
+
+
+
+/**
+ * [UI_Update description]
+ * @param RTOS_MEM [description]
+ * @param RTOSTime [description]
+ */
 void UI_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime);
 
 
