@@ -1,17 +1,44 @@
 #include "Recipe/parser.h"
+#include "OS/OSMemMap.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include "Recipe/ingredient.h"
 #include "Recipe/recipe.h"
-#include "rapidxml-1.13/rapidxml.hpp"
-#include "rapidxml-1.13/rapidxml_print.hpp"
+#include "Recipe/rapidxml-1.13/rapidxml.hpp"
+#include "Recipe/rapidxml-1.13/rapidxml_print.hpp"
+
+#define ENABLE_DEBUG_CONSOLE
 
 
+void Parser_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
+{
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Recipe init task starting" << std::endl;
+	#endif
+	
+	struct Parser_MemMap* RecipeMem_ptr = &((*RTOS_MEM).ParserMem);
 
-void Parser_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err) {}
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Recipe init task ending\n" << std::endl;
+	#endif
+}
+
+
 											  
-void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime) {}
+void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
+{
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Recipe update task starting" << std::endl;
+	#endif
+	
+	//task update code	
+	struct Parser_MemMap* RecipeMem_ptr = &((*RTOS_MEM).ParserMem);
+	
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Recipe update task ending\n" << std::endl;
+	#endif
+}
 
 
 

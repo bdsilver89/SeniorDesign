@@ -5,17 +5,17 @@
 #include "Drivers/Weight.h"
 #include "Control/Controller.h"
 #include "UI/UI.h"
-#include "Recipe/Parser.h"
+#include "Recipe/parser.h"
 
 
 // struct definition for shared memory in RTOS environment
 struct RTOS_SHARED_MEM
 {
-	struct Motors_MemMap			MotorDriverMem;
-	struct Weight_MemMap			WeightDriverMem;
-	struct Controller_MemMap		ControllerMem;
-	struct UI_MemMap				UIMem;
-	struct Parser_MemMap			ParserMem;
+	struct UI_MemMap			UIMem;
+	struct Parser_MemMap		ParserMem;	
+	struct Controller_MemMap	ControllerMem;	
+	struct Motors_MemMap		MotorDriverMem;
+	struct Weight_MemMap		WeightDriverMem;
 };
 #define RTOS_SHARED_MEM_SIZE	sizeof(RTOS_SHARED_MEM)
 

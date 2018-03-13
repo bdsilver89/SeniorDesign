@@ -8,7 +8,9 @@ SRC =	application/app.cpp		\
 		Drivers/Motors.cpp		\
 		Drivers/Weight.cpp		\
 		UI/UI.cpp				\
-		Recipe/parser.cpp
+		Recipe/parser.cpp		\
+		Recipe/ingredient.cpp	\
+		Recipe/recipe.cpp
 
 SRCPATH=./code/src/
 OBJ=$(addprefix $(SRCPATH), $(SRC:.cc=.o))

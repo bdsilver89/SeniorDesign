@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <cstdint>
 
-#define NUM_INIT	4
-#define NUM_TASKS	4
+#define NUM_INIT	5	
+#define NUM_TASKS	5
 
 // Shared memory structure for all tasks
 struct RTOS_SHARED_MEM MemMap;
@@ -33,17 +33,19 @@ typedef struct init
 
 //List of all initialization tasks to run before the OS cycle starts
 RTOS_INIT_TASK Init_List[NUM_INIT] = {
+    {&UI_Init,				&(MemMap)},
+	{&Parser_Init,			&(MemMap)},
     {&Controller_Init, 		&(MemMap)},
     {&Motor_Init, 			&(MemMap)},
-    {&Weight_Init,			&(MemMap)},
-    {&UI_Init,				&(MemMap)}
+    {&Weight_Init,			&(MemMap)}
 };
 
 
 // List of all tasks to run in one OS cycle
 RTOS_TASK Task_List[NUM_TASKS] = {
+    {&UI_Update,			&(MemMap)},
+    {&Parser_Update,		&(MemMap)},
     {&Controller_Update,	&(MemMap)},
     {&Motor_Update,			&(MemMap)},
-    {&Weight_Update,		&(MemMap)},
-    {&UI_Update,			&(MemMap)}
+    {&Weight_Update,		&(MemMap)}
 };

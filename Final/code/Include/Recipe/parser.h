@@ -9,9 +9,11 @@
 
 struct Parser_MemMap
 {
-	uint8_t		temp;
+	std::string	filename;
+	uint8_t		done_flag;
+	uint8_t		busy_flag;
 };
-
+#define PARSER_MEMMAP_SIZE	sizeof(Parser_MemMap)
 
 /**
  * [Parser_Init description]

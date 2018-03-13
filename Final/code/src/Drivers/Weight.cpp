@@ -5,7 +5,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
-#define ENABLE_DEBUG_CONSOLE
+// #define ENABLE_DEBUG_CONSOLE
 
 /* NOTE:
  * WiringPiI2C has a fun bug for writing to 16 bit registers
@@ -94,7 +94,7 @@ void Weight_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 	else
 	{
 		#ifdef ENABLE_DEBUG_CONSOLE
-			//std::cout << "Weight update task starting" << std::endl;
+			std::cout << "Weight update task starting" << std::endl;
 		#endif
 
 		//task update code
@@ -123,7 +123,7 @@ void Weight_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 		#endif
 		
 		#ifdef ENABLE_DEBUG_CONSOLE
-			//std::cout << "Weight update task ending" << std::endl;
+			std::cout << "Weight update task ending\n" << std::endl;
 		#endif
 	}
 }
