@@ -89,6 +89,7 @@ void Motor_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "Motor init task starting" << std::endl;
 	#endif
+	
 	struct Motors_MemMap* MotorMem_ptr = &((*RTOS_MEM).MotorDriverMem);
 	
 	// connect to the servo board on the i2c bus
@@ -124,33 +125,25 @@ void Motor_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 
 
 
-void Motor_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
-							uint32_t RTOSTime)
+void Motor_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 {
-	/*
-	if (RTOSTime % 10 != 0)
-		return;
-		
-	else
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Motor update task starting" << std::endl;
+	#endif
+	struct Motors_MemMap* MotorMem_ptr = &((*RTOS_MEM).MotorDriverMem);
+	struct Controller_MemMap* ControllerMem_ptr = &((*RTOS_MEM).ControllerMem);
+	
+	// update each motor with the control value
+	for (int i = 0; i < NUM_MOTORS; i++)
 	{
-	*/
-		#ifdef ENABLE_DEBUG_CONSOLE
-			std::cout << "Motor update task starting" << std::endl;
-		#endif
-		struct Motors_MemMap* MotorMem_ptr = &((*RTOS_MEM).MotorDriverMem);
-		struct Controller_MemMap* ControllerMem_ptr = &((*RTOS_MEM).ControllerMem);
-		
-		// update each motor with the control value
-		for (int i = 0; i < NUM_MOTORS; i++)
-		{
-			if ((*ControllerMem_ptr).Motor_Speeds[i] != 0)
-			{
-				setPWM(i, 0, (*ControllerMem_ptr).Motor_Speeds[i]);
-			}
-		}
+		if ((*ControllerMem_ptr).Motor_Enable[i] == 1)
+			setPWM(i, 0, (*ControllerMem_ptr).Motor_Speeds[i]);
+			
+		else
+			setPWM(i, 0, 0);
+	}
 
-		#ifdef ENABLE_DEBUG_CONSOLE		
-			std::cout << "Motor update task ending\n"  << std::endl;
-		#endif
-	//}
+	#ifdef ENABLE_DEBUG_CONSOLE		
+		std::cout << "Motor update task ending\n"  << std::endl;
+	#endif
 }

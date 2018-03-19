@@ -30,10 +30,12 @@ std::vector<std::string> getParsedRecipes(void);
 class Recipe
 {
 private:
-    std::string FilePath;
     std::string FileName;
+    std::vector<Ingredient> Ingredients;
 
 public:
+	Recipe() {}
+	
     Recipe(std::string n);
 
     ~Recipe();
@@ -43,11 +45,29 @@ public:
      * @return  [description]
      */
     std::string getName(void);
+    
+        
+    
+     /**
+     * [addIngredient description]
+     */
+    void addIngredient(Ingredient ing);   
+    
+
+
+     /**
+     * [display description]
+     */
+    void display(void); 
+
+    
 
     /**
      * [readFile description]
      */
     void readFile(void);
+    
+    
     
     /**
      * Change to write a single Ingredient and a list of
@@ -55,6 +75,7 @@ public:
      * also a write for text or something?
      */
     
+   
     /**
      * [clearFile description]
      */

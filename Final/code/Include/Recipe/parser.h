@@ -5,16 +5,17 @@
 #include <vector>
 #include <string>
 #include "Recipe/ingredient.h"
+#include "Recipe/recipe.h"
 
 
 struct Parser_MemMap
 {
-	std::string	Recipe_Path;
-	std::string	rawfilename;
-	std::string	filename;
-	uint8_t		done_flag;
-	uint8_t		busy_flag;
+	std::string		Recipe_Path;
+	std::string		rawfilename;
+	std::string		filename;
+	Recipe			currentRecipe;
 };
+
 #define PARSER_MEMMAP_SIZE	sizeof(Parser_MemMap)
 
 /**
@@ -38,7 +39,7 @@ void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime);
 class Parser
 {
 public:
-    Parser(void);
+    Parser(void) {}
  
  	/**
  	 * [parseFile description]
@@ -46,7 +47,7 @@ public:
  	 * @param IngList  [description]
  	 * @return         [description]
  	 */
- 	std::vector<Ingredient> parseFile(std::string fileName);
+ 	Recipe parseFile(std::string fileName);
 
  	/**
  	 * [writeFile description]

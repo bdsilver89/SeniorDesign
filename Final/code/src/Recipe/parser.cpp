@@ -8,8 +8,9 @@
 #include "Recipe/rapidxml-1.13/rapidxml.hpp"
 #include "Recipe/rapidxml-1.13/rapidxml_print.hpp"
 
-#define ENABLE_DEBUG_CONSOLE
+// #define ENABLE_DEBUG_CONSOLE
 
+Parser parser;
 
 void Parser_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 {
@@ -18,10 +19,11 @@ void Parser_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	#endif
 	
 	struct Parser_MemMap* RecipeMem_ptr = &((*RTOS_MEM).ParserMem);
-	(*RecipeMem_ptr).Recipe_Path = "./../../../saved_recipes/";
+	(*RecipeMem_ptr).Recipe_Path = "./saved_recipes/";
 	(*RecipeMem_ptr).rawfilename = "test.xml";
 	(*RecipeMem_ptr).filename = (*RecipeMem_ptr).Recipe_Path + (*RecipeMem_ptr).rawfilename;
-	
+
+
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "Recipe init task ending\n" << std::endl;
 	#endif
@@ -37,11 +39,26 @@ void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 	
 	//task update code	
 	struct Parser_MemMap* RecipeMem_ptr = &((*RTOS_MEM).ParserMem);
-
-	#ifdef ENABLE_DEBUG_CONSOLE
-		std::cout << "Recipe: " << (*RecipeMem_ptr).filename << std::endl;
-	#endif	
+	struct UI_MemMap* UIMem_ptr = &((*RTOS_MEM).UIMem);
 	
+	// Read a new recipe
+	if((*UIMem_ptr).readRecipeFlag == 1)
+	{
+		(*RecipeMem_ptr).currentRecipe = parser.parseFile((*RecipeMem_ptr).filename);
+		
+		#ifdef ENABLE_DEBUG_CONSOLE
+			((*RecipeMem_ptr).currentRecipe).display();
+		#endif
+	}
+	
+	// Write the current recipe
+	else if((*UIMem_ptr).writeRecipeFlag == 1)
+	{
+		/* TODO: test writing */
+		std::cout << "WRITE" << std::endl;
+	}
+		
+		
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "Recipe update task ending\n" << std::endl;
 	#endif
@@ -49,12 +66,11 @@ void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 
 
 
-std::vector<Ingredient> Parser::parseFile(std::string fileName)
+Recipe Parser::parseFile(std::string fileName)
 {
-    std::vector<Ingredient> result;
+	Recipe result(fileName);
     std::string line;
-    std::string filePath = RECIPE_PATH + fileName + ".xml";
-    std::ifstream File(filePath);
+    std::ifstream File(fileName);
     if (File.is_open())
     {
         rapidxml::xml_document<> doc;
@@ -74,9 +90,9 @@ std::vector<Ingredient> Parser::parseFile(std::string fileName)
             double amount_d  = std::stod(amount_str);
 
             Ingredient ingredient_obj(amount_d, meas_str, spice_str);
-            result.push_back(ingredient_obj);
+            result.addIngredient(ingredient_obj);
+			// result.push_back(ingredient_obj);
         }
-
         File.close();
     }
 

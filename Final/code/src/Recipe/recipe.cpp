@@ -25,7 +25,6 @@ std::vector<std::string> getParsedRecipes(void)
 Recipe::Recipe(std::string n)
 {
     FileName = n;
-    FilePath = RECIPE_PATH + n + ".txt";
 }
 
 
@@ -41,6 +40,24 @@ std::string Recipe::getName(void)
 
 
 
+void Recipe::addIngredient(Ingredient ing)
+{
+	Ingredients.push_back(ing);
+}
+
+
+
+void Recipe::display()
+{
+	for(int i = 0; i < Ingredients.size(); i++)
+	{
+		Ingredients[i].display();
+		std::cout << std::endl;
+	}
+}
+
+
+/*
 void Recipe::readFile(void)
 {
     std::string line;
@@ -60,7 +77,7 @@ void Recipe::readFile(void)
         std::cout << "Could not open file: " << FilePath << std::endl;
     }
 }
-
+*/
 
 
 /**
@@ -71,7 +88,7 @@ void Recipe::readFile(void)
  * That would be called by the parser
  * in order to clear a file to writing to
  */
-
+/*
 void Recipe::clearFile(void)
 {
     std::ofstream File(FilePath, std::ofstream::out | std::ofstream::trunc);
@@ -103,3 +120,4 @@ void Recipe::changeRecipeName(std::string n)
 {
     
 }
+*/

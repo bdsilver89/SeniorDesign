@@ -84,46 +84,38 @@ void Weight_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 
 	
 
-void Weight_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
-											  uint32_t RTOSTime)
+void Weight_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 {
-	
-	if (RTOSTime % 10 != 0)
-		return;
-		
-	else
-	{
-		#ifdef ENABLE_DEBUG_CONSOLE
-			std::cout << "Weight update task starting" << std::endl;
-		#endif
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Weight update task starting" << std::endl;
+	#endif
 
-		//task update code
-		struct Weight_MemMap* WeightMem_ptr = &((*RTOS_MEM).WeightDriverMem);
+	//task update code
+	struct Weight_MemMap* WeightMem_ptr = &((*RTOS_MEM).WeightDriverMem);
 		
-		uint16_t config_val = wiringPiI2CReadReg16(sensor, ADS1015_REG_POINTER_CONFIG);
-		config_val = ((((config_val & 0x00FF) << 8)   | ((config_val & 0xFF00) >> 8)));
-		config_val |= ADS1015_REG_CONFIG_OS_SINGLE;
-		wiringPiI2CWriteReg16(sensor, ADS1015_REG_POINTER_CONFIG, (((config_val & 0x00FF) << 8) | ((config_val & 0xFF00) >> 8)));
+	uint16_t config_val = wiringPiI2CReadReg16(sensor, ADS1015_REG_POINTER_CONFIG);
+	config_val = ((((config_val & 0x00FF) << 8)   | ((config_val & 0xFF00) >> 8)));
+	config_val |= ADS1015_REG_CONFIG_OS_SINGLE;
+	wiringPiI2CWriteReg16(sensor, ADS1015_REG_POINTER_CONFIG, (((config_val & 0x00FF) << 8) | ((config_val & 0xFF00) >> 8)));
 		
-		// TODO: Test without this
-		usleep(1000);
+	// TODO: Test without this
+	usleep(1000);
 		
-		int16_t raw = wiringPiI2CReadReg16(sensor, ADS1015_REG_POINTER_CONVERT);
-		raw = ((((raw & 0x00FF) << 8)  | ((raw & 0xFF00) >> 8)));
-		(*WeightMem_ptr).raw_ADC = raw >> 4;
-		(*WeightMem_ptr).voltage_ADC = 2.048 * double((*WeightMem_ptr).raw_ADC)/2048.0;
+	int16_t raw = wiringPiI2CReadReg16(sensor, ADS1015_REG_POINTER_CONVERT);
+	raw = ((((raw & 0x00FF) << 8)  | ((raw & 0xFF00) >> 8)));
+	(*WeightMem_ptr).raw_ADC = raw >> 4;
+	(*WeightMem_ptr).voltage_ADC = 2.048 * double((*WeightMem_ptr).raw_ADC)/2048.0;
 
-		// TODO: Add a scale and offset calibration routine
-		(*WeightMem_ptr).weight = 1000 * (((*WeightMem_ptr).ADC_scale) * ((*WeightMem_ptr).voltage_ADC) + (*WeightMem_ptr).ADC_offset);
-		#ifdef ENABLE_DEBUG_CONSOLE		
-			std::cout << "\tADC raw value: " << std::dec << (*WeightMem_ptr).raw_ADC;
-			std::cout << ", " << std::hex    << (*WeightMem_ptr).raw_ADC << std::endl;
-			std::cout << "\tADC voltage: "   << (*WeightMem_ptr).voltage_ADC << std::endl;
-			std::cout << "\tADC weight: "    << (*WeightMem_ptr).weight << " grams" << std::endl;
-		#endif
+	// TODO: Add a scale and offset calibration routine
+	(*WeightMem_ptr).weight = 1000 * (((*WeightMem_ptr).ADC_scale) * ((*WeightMem_ptr).voltage_ADC) + (*WeightMem_ptr).ADC_offset);
+	#ifdef ENABLE_DEBUG_CONSOLE		
+		std::cout << "\tADC raw value: " << std::dec << (*WeightMem_ptr).raw_ADC;
+		std::cout << ", " << std::hex    << (*WeightMem_ptr).raw_ADC << std::endl;
+		std::cout << "\tADC voltage: "   << (*WeightMem_ptr).voltage_ADC << std::endl;
+		std::cout << "\tADC weight: "    << (*WeightMem_ptr).weight << " grams" << std::endl;
+	#endif
 		
-		#ifdef ENABLE_DEBUG_CONSOLE
-			std::cout << "Weight update task ending\n" << std::endl;
-		#endif
-	}
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Weight update task ending\n" << std::endl;
+	#endif
 }

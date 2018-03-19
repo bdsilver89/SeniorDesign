@@ -28,41 +28,33 @@ void Controller_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 
 
 
-void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
-											 		   uint32_t RTOSTime)
+void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 {
-    if (RTOSTime % 5 != 0)
-		return;
+	struct UI_MemMap* UIMem_ptr = &((*RTOS_MEM).UIMem);
+	struct Controller_MemMap* ControllerMem_ptr = &((*RTOS_MEM).ControllerMem);	
 
-	else
+	if((*UIMem_ptr).startControlFlag == 1)
 	{
 		#ifdef ENABLE_DEBUG_CONSOLE
 			std::cout << "Controller update starting" << std::endl;
 		#endif
-		struct Controller_MemMap* ControllerMem_ptr = &((*RTOS_MEM).ControllerMem);	
-
-		/*
-		if (motor_val < 410)
+		
+		/*if (motor_val < 410)
 		{
 			motor_val++;
 			(*ControllerMem_ptr).Motor_Enable[0] = 1;
 			(*ControllerMem_ptr).Motor_Enable[1] = 1;
 		}
-		
-		else
-		{
-			(*ControllerMem_ptr).Motor_Enable[0] = 0;
-			(*ControllerMem_ptr).Motor_Enable[1] = 0;
-		}
 	
 		(*ControllerMem_ptr).Motor_Speeds[0] = motor_val;
 		(*ControllerMem_ptr).Motor_Speeds[1] = 780 - motor_val;
 		*/
+
+		(*ControllerMem_ptr).Motor_Enable[0] = 1;
+		(*ControllerMem_ptr).Motor_Enable[1] = 1;
 		
-		
-		// Uhh these aren't the same and thats a problem
-		(*ControllerMem_ptr).Motor_Speeds[0] = 390;
-		(*ControllerMem_ptr).Motor_Speeds[1] = 387;
+		(*ControllerMem_ptr).Motor_Speeds[0] = 370;
+		(*ControllerMem_ptr).Motor_Speeds[1] = 410;	
 		
 		
 		// PID Control Loop
@@ -77,13 +69,16 @@ void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM,
 			
 			PID_val[i] = (Kp[i] * Error[i]) + (Ki[i] * Integral[i]) + (Kd[i] * Derivative[i]);
 		}
-		*/
-		
-		
-		
+		*/	
 		
 		#ifdef ENABLE_DEBUG_CONSOLE
 			std::cout << "Controller update ending\n"  << std::endl;
 		#endif
+	}
+	
+	else
+	{
+		(*ControllerMem_ptr).Motor_Enable[0] = 0;
+		(*ControllerMem_ptr).Motor_Enable[1] = 0;
 	}
 }

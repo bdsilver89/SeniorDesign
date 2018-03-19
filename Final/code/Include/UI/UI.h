@@ -5,7 +5,9 @@
 
 struct UI_MemMap
 {
-	uint8_t		temp;
+	uint8_t		readRecipeFlag;
+	uint8_t		writeRecipeFlag;
+	uint8_t		startControlFlag;
 };
 #define UI_MEMMAP_SIZE	sizeof(UI_MemMap)
 
