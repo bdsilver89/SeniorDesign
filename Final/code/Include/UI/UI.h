@@ -5,7 +5,7 @@
 
 struct UI_MemMap
 {
-	uint8_t		test;
+	uint8_t		temp;
 };
 #define UI_MEMMAP_SIZE	sizeof(UI_MemMap)
 

@@ -18,7 +18,10 @@ void Parser_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	#endif
 	
 	struct Parser_MemMap* RecipeMem_ptr = &((*RTOS_MEM).ParserMem);
-
+	(*RecipeMem_ptr).Recipe_Path = "./../../../saved_recipes/";
+	(*RecipeMem_ptr).rawfilename = "test.xml";
+	(*RecipeMem_ptr).filename = (*RecipeMem_ptr).Recipe_Path + (*RecipeMem_ptr).rawfilename;
+	
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "Recipe init task ending\n" << std::endl;
 	#endif
@@ -34,6 +37,10 @@ void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 	
 	//task update code	
 	struct Parser_MemMap* RecipeMem_ptr = &((*RTOS_MEM).ParserMem);
+
+	#ifdef ENABLE_DEBUG_CONSOLE
+		std::cout << "Recipe: " << (*RecipeMem_ptr).filename << std::endl;
+	#endif	
 	
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "Recipe update task ending\n" << std::endl;

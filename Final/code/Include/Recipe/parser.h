@@ -9,6 +9,8 @@
 
 struct Parser_MemMap
 {
+	std::string	Recipe_Path;
+	std::string	rawfilename;
 	std::string	filename;
 	uint8_t		done_flag;
 	uint8_t		busy_flag;
