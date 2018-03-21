@@ -51,6 +51,13 @@ void Recipe::addIngredient(Ingredient ing)
 
 
 
+void Recipe::addSpice(Ingredient ing)
+{
+	Spices.push_back(ing);
+}
+
+
+
 void Recipe::addDirection(std::string dir)
 {
 	Directions.push_back(dir);
@@ -73,12 +80,25 @@ std::vector<std::string> Recipe::getDirections()
 
 void Recipe::display()
 {
+	std::cout << "Spices:" << std::endl;
+	for(int i = 0; i < Spices.size(); i++)
+	{
+		Spices[i].display();
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+		
+	
+	std::cout << "Other Ingredients:" << std::endl;
 	for(int i = 0; i < Ingredients.size(); i++)
 	{
 		Ingredients[i].display();
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
+	
+	
+	std::cout << "Directions:" << std::endl;
 	for(int i = 0; i < Directions.size(); i++)
 	{
 		std::cout << "Step " << i+1 << ": " << Directions[i] << std::endl;

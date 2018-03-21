@@ -33,7 +33,7 @@ void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 	struct UI_MemMap* UIMem_ptr = &((*RTOS_MEM).UIMem);
 	struct Controller_MemMap* ControllerMem_ptr = &((*RTOS_MEM).ControllerMem);	
 
-	if((*UIMem_ptr).startControlFlag == 1)
+	if((*UIMem_ptr).startDispensingFlag == 1)
 	{
 		#ifdef ENABLE_DEBUG_CONSOLE
 			std::cout << "Controller update starting" << std::endl;

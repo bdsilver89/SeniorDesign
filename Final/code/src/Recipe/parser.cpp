@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <unordered_map>
 #include "Recipe/ingredient.h"
 #include "Recipe/recipe.h"
 #include "Recipe/rapidxml-1.13/rapidxml.hpp"
@@ -110,13 +112,23 @@ Recipe Parser::parseFile(std::string fileName)
         for(rapidxml::xml_node<> *i = root_node->first_node("ingredients")->first_node("ing");
             i != 0; i = i->next_sibling("ing"))
         {
-            std::string spice_str  (i->first_node("item")->value());
+			std::string spice_str  (i->first_node("item")->value());
             std::string meas_str   (i->first_node("amt")->first_node("unit")->value());
             std::string amount_str (i->first_node("amt")->first_node("qty")->value());
+            
             double amount_d  = std::stod(amount_str);
-
+            std::transform(spice_str.begin(), spice_str.end(), spice_str.begin(), ::tolower);
+            std::transform(meas_str.begin(), meas_str.end(), meas_str.begin(), ::tolower);
+           
             Ingredient ingredient_obj(amount_d, meas_str, spice_str);
-            result.addIngredient(ingredient_obj);
+            
+            // std::unordered_map<std::string, double>::const_iterator got = SpicetoWeight.find(spice_str);
+ 
+			// if(got == SpicetoWeight.end())
+				result.addIngredient(ingredient_obj);
+
+			// else
+				// result.addSpice(ingredient_obj);
         }
         
         for(rapidxml::xml_node<> *i = root_node->first_node("directions")->first_node("step");

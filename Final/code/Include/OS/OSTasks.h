@@ -32,7 +32,7 @@ typedef struct init
 
 
 //List of all initialization tasks to run before the OS cycle starts
-RTOS_INIT_TASK Init_List[NUM_INIT] = {
+const RTOS_INIT_TASK Init_List[NUM_INIT] = {
     {&UI_Init,				&(MemMap)},
 	{&Parser_Init,			&(MemMap)},
     {&Controller_Init, 		&(MemMap)},
@@ -42,7 +42,7 @@ RTOS_INIT_TASK Init_List[NUM_INIT] = {
 
 
 // List of all tasks to run in one OS cycle
-RTOS_TASK Task_List[NUM_TASKS] = {
+const RTOS_TASK Task_List[NUM_TASKS] = {
     {&UI_Update,			&(MemMap)},
     {&Parser_Update,		&(MemMap)},
     {&Controller_Update,	&(MemMap)},

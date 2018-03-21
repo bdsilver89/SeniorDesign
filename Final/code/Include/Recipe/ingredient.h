@@ -6,13 +6,6 @@
 #include <vector>
 
 
-/**
- * TODO:
- * Add types for ingredients and the measurements
- */
-
-
-
 class Ingredient
 {
 private:

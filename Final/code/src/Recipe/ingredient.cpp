@@ -2,7 +2,6 @@
 #include <iostream>
 
 
-
 Ingredient::Ingredient(double a, std::string m, std::string t)
 {
     Amount = a;
@@ -14,9 +13,9 @@ Ingredient::Ingredient(double a, std::string m, std::string t)
 
 void Ingredient::display(void)
 {
-	std::cout << "The amount is: " << Amount << std::endl;
-	std::cout << "The measurement type is: " << Measurement << std::endl;
-	std::cout << "The spice is: " << Spice << std::endl;
+	std::cout << "\tING: " << Spice << std::endl;
+	std::cout << "\tAMT: " << Amount << std::endl;
+	std::cout << "\tMEAS: " << Measurement << std::endl;
 }
 
 

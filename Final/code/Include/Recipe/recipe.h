@@ -32,6 +32,7 @@ class Recipe
 private:
     std::string FileName;
     std::vector<Ingredient> Ingredients;
+    std::vector<Ingredient> Spices;
     std::vector<std::string> Directions;
 
 public:
@@ -56,12 +57,16 @@ public:
     void addIngredient(Ingredient ing);   
 
 
-
+     /**
+     * [addSpice description]
+     */
+    void addSpice(Ingredient ing);   
+    
+    
      /**
      * [addDirection description]
      */
 	void addDirection(std::string dir);
-
 
 
     /**
