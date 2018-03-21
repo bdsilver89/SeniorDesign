@@ -54,7 +54,7 @@ public:
  	 * @param fileName [description]
  	 * @param IngList  [description]
  	 */
- 	void writeFile(std::string fileName, std::vector<Ingredient> IngList);
+ 	void writeFile(Recipe r);
 };
 
 

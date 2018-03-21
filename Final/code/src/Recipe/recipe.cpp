@@ -21,7 +21,6 @@ std::vector<std::string> getParsedRecipes(void)
 
 
 
-
 Recipe::Recipe(std::string n)
 {
     FileName = n;
@@ -29,11 +28,16 @@ Recipe::Recipe(std::string n)
 
 
 
-Recipe::~Recipe(void) {}
+Recipe::Recipe(std::string n, std::vector<Ingredient> ing, std::vector<std::string> dir)
+{
+    FileName = n;
+    Ingredients = ing;
+    Directions = dir;
+}
 
 
 
-std::string Recipe::getName(void)
+std::string Recipe::getFileName(void)
 {
     return FileName;
 }
@@ -47,6 +51,26 @@ void Recipe::addIngredient(Ingredient ing)
 
 
 
+void Recipe::addDirection(std::string dir)
+{
+	Directions.push_back(dir);
+}
+
+
+
+std::vector<Ingredient> Recipe::getIngredients()
+{
+	return Ingredients;
+}
+
+
+
+std::vector<std::string> Recipe::getDirections()
+{
+	return Directions;
+}
+
+
 void Recipe::display()
 {
 	for(int i = 0; i < Ingredients.size(); i++)
@@ -54,70 +78,10 @@ void Recipe::display()
 		Ingredients[i].display();
 		std::cout << std::endl;
 	}
+	std::cout << std::endl;
+	for(int i = 0; i < Directions.size(); i++)
+	{
+		std::cout << "Step " << i+1 << ": " << Directions[i] << std::endl;
+		std::cout << std::endl;
+	}
 }
-
-
-/*
-void Recipe::readFile(void)
-{
-    std::string line;
-    std::ifstream File(FilePath);
-
-    if (File.is_open())
-    {
-        while (getline(File, line))
-        {   
-            std::cout << line << std::endl;
-        }
-    File.close();
-    }
-
-    else
-    {
-        std::cout << "Could not open file: " << FilePath << std::endl;
-    }
-}
-*/
-
-
-/**
- * TODO
- * This function adds onto the existing file
- * It needs a clearfile function
- * to erase everything inside of it
- * That would be called by the parser
- * in order to clear a file to writing to
- */
-/*
-void Recipe::clearFile(void)
-{
-    std::ofstream File(FilePath, std::ofstream::out | std::ofstream::trunc);
-    File.close();
-}
-
-
-void Recipe::writeFile(Ingredient I)
-{
-   std::ofstream File(FilePath, std::ios::app);
-    if (File.is_open())
-    {
-        File << I.getType() << "\n";
-        File << I.getAmount() << "\n";
-        File << I.getMeasurement() << "\n\n"; 
-        File.close();
-    }
-
-    else
-    {
-        std::cout << "Could not save recipe" << std::endl;
-    }
-}
-
-
-
-
-void Recipe::changeRecipeName(std::string n)
-{
-    
-}
-*/

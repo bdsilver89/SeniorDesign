@@ -32,71 +32,61 @@ class Recipe
 private:
     std::string FileName;
     std::vector<Ingredient> Ingredients;
+    std::vector<std::string> Directions;
 
 public:
 	Recipe() {}
 	
     Recipe(std::string n);
-
-    ~Recipe();
-
-    /**
-     * [getName description]
-     * @return  [description]
-     */
-    std::string getName(void);
     
-        
-    
-     /**
-     * [addIngredient description]
-     */
-    void addIngredient(Ingredient ing);   
-    
+    Recipe(std::string n, std::vector<Ingredient> ing, std::vector<std::string> dir);
 
+    ~Recipe() {}
 
      /**
      * [display description]
      */
     void display(void); 
 
-    
 
-    /**
-     * [readFile description]
+
+     /**
+     * [addIngredient description]
      */
-    void readFile(void);
-    
-    
-    
-    /**
-     * Change to write a single Ingredient and a list of
-     * ingredients
-     * also a write for text or something?
+    void addIngredient(Ingredient ing);   
+
+
+
+     /**
+     * [addDirection description]
      */
-    
-   
-    /**
-     * [clearFile description]
-     */
-    void clearFile(void);
+	void addDirection(std::string dir);
 
 
 
     /**
-     * [writeFile description]
-     * @param I [description]
+     * [getName description]
+     * @return  [description]
      */
-    void writeFile(Ingredient I);
-
-
-
-    /**
-     * [changeRecipeName description]
-     * @param n [description]
+    std::string getFileName(void);
+    
+    
+        
+     /**
+     * [getIngredients description]
+     * @return  [description]
      */
-    void changeRecipeName(std::string n);
+	std::vector<Ingredient> getIngredients();
+
+
+
+     /**
+     * [getDirections description]
+     * @return  [description]
+     */
+	std::vector<std::string> getDirections();
+	
+	
 };
-
 
 #endif
