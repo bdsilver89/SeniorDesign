@@ -6,11 +6,12 @@
 #include "Control/Controller.h"
 #include "UI/UI.h"
 #include "Recipe/parser.h"
-
+#include "Config/config.h"
 
 // struct definition for shared memory in RTOS environment
 struct RTOS_SHARED_MEM
 {
+	struct Config_MemMap		ConfigMem;
 	struct UI_MemMap			UIMem;
 	struct Parser_MemMap		ParserMem;	
 	struct Controller_MemMap	ControllerMem;	

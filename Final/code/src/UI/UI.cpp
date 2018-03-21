@@ -14,7 +14,7 @@ void UI_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	struct UI_MemMap* UIMem_ptr = &((*RTOS_MEM).UIMem);
 	(*UIMem_ptr).readRecipeFlag = 0;
 	(*UIMem_ptr).writeRecipeFlag = 0;
-	(*UIMem_ptr).startControlFlag = 0;	
+	(*UIMem_ptr).startDispensingFlag = 0;	
 
 
 	#ifdef ENABLE_DEBUG_CONSOLE

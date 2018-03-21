@@ -78,6 +78,11 @@ void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 		Recipe testRec("./saved_recipes/writingTest.xml", testIng, testDir);
 		parser.writeFile(testRec);
 	}
+	
+	else if((*UIMem_ptr).startDispensingFlag == 1)
+	{
+		std::cout << "Dispensing" << std::endl;
+	}
 		
 		
 	#ifdef ENABLE_DEBUG_CONSOLE
