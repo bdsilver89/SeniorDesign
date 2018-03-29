@@ -6,13 +6,16 @@
 #include <algorithm>
 #include <unordered_map>
 #include "Recipe/ingredient.h"
+#include "Recipe/ingredient_list.h"
 #include "Recipe/recipe.h"
 #include "Recipe/rapidxml-1.13/rapidxml.hpp"
 #include "Recipe/rapidxml-1.13/rapidxml_print.hpp"
 
-#define ENABLE_DEBUG_CONSOLE
+// #define ENABLE_DEBUG_CONSOLE
 
 Parser parser;
+
+//TEST RECIPE TO WRITE!!!!
 std::vector<Ingredient> testIng;
 std::vector<std::string> testDir;
 
@@ -27,6 +30,8 @@ void Parser_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	(*RecipeMem_ptr).rawfilename = "test.xml";
 	(*RecipeMem_ptr).filename = (*RecipeMem_ptr).Recipe_Path + (*RecipeMem_ptr).rawfilename;
 
+
+	// TEST RECIPE TO WRITE!!!!
 	Ingredient a(1.3, "pounds", "salt");
 	testIng.push_back(a);
 
@@ -39,12 +44,14 @@ void Parser_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	Ingredient d(3.5, "grams", "bbq seasoning");
 	testIng.push_back(d);
 	
-	
+
 	testDir.push_back("Combine salt and garlic powder");
 	testDir.push_back("Sprinkle the bbq seasoning over");
 	testDir.push_back("Coat chicken with mixture");
 	testDir.push_back("Grill for 3 minutes on each side");
 	testDir.push_back("Garnish with thyme flowers");
+	
+	
 	
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "Recipe init task ending\n" << std::endl;
@@ -122,13 +129,15 @@ Recipe Parser::parseFile(std::string fileName)
            
             Ingredient ingredient_obj(amount_d, meas_str, spice_str);
             
-            // std::unordered_map<std::string, double>::const_iterator got = SpicetoWeight.find(spice_str);
+            std::unordered_map<std::string, double>::const_iterator got = SpicetoWeight.find(spice_str);
  
-			// if(got == SpicetoWeight.end())
+			if(got == SpicetoWeight.end())
 				result.addIngredient(ingredient_obj);
 
-			// else
-				// result.addSpice(ingredient_obj);
+			else
+			{
+				result.addSpice(ingredient_obj);
+			}
         }
         
         for(rapidxml::xml_node<> *i = root_node->first_node("directions")->first_node("step");

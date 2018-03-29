@@ -39,6 +39,21 @@ void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 			std::cout << "Controller update starting" << std::endl;
 		#endif
 		
+		
+		/* FINAL CONTROLLER:
+		 * for each update until dispensing flag is 0
+		 * do one quick read and update of the PID loop
+		 * for the ONE motor related to the spice in the 
+		 * SPICES list of the recipe.
+		 * NEED TO CONVERT THE SPICE WEIGHT TO GRAMS
+		 * /
+		
+		
+		
+		
+		
+		
+		
 		/*if (motor_val < 410)
 		{
 			motor_val++;
@@ -53,8 +68,8 @@ void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 		(*ControllerMem_ptr).Motor_Enable[0] = 1;
 		(*ControllerMem_ptr).Motor_Enable[1] = 1;
 		
-		(*ControllerMem_ptr).Motor_Speeds[0] = 370;
-		(*ControllerMem_ptr).Motor_Speeds[1] = 410;	
+		(*ControllerMem_ptr).Motor_Speeds[0] = 420;
+		(*ControllerMem_ptr).Motor_Speeds[1] = 370;	
 		
 		
 		// PID Control Loop

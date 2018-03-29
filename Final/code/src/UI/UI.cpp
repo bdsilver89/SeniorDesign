@@ -32,13 +32,17 @@ void UI_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 
 	//task update code	
 	struct UI_MemMap* UIMem_ptr = &((*RTOS_MEM).UIMem);
-	if (RTOSTime == 10)
-		(*UIMem_ptr).readRecipeFlag = 1;
+	// if (RTOSTime == 10)
+	if (RTOSTime < 50)
+		// (*UIMem_ptr).readRecipeFlag = 1;
 		// (*UIMem_ptr).writeRecipeFlag = 1;
+		(*UIMem_ptr).startDispensingFlag = 1;	
 
 	else
-		(*UIMem_ptr).readRecipeFlag = 0;
+		// (*UIMem_ptr).readRecipeFlag = 0;
 		// (*UIMem_ptr).writeRecipeFlag = 0;
+		(*UIMem_ptr).startDispensingFlag = 0;	
+		
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "UI update task ending\n" << std::endl;
 	#endif	
