@@ -1,17 +1,24 @@
 # SeniorDesign
-AutoSpice: The Automatic Spice Mixer, Software portion of Senior Design project
+AutoSpice: The Automatic Spice Mixer
+==============
 
-Final
-	Currently the final build of the project
+Repository Structure
+--------------
+**Final**
+Currently the final build of the project
 	
-Gui Test
-	Contains various tests for the development of the user interface
+**Gui Test**
+Contains various tests for the development of the user interface
 
-Recipe Parser
-	A test platform for recipe parsing
+**Recipe Parser**
+A test platform for recipe parsing
 
-RecipeML Prototype
-	A test for an alternate platform of recipe parsing using RecipeML (XML variant)
+**RecipeML Prototype**
+A test for an alternate platform of recipe parsing using RecipeML (XML variant)
 
-Servo Test
-	A test for driving a single servo
+**Servo Test**
+A test for driving a single servo
+
+
+Final Code Organization
+--------------
