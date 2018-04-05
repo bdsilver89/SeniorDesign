@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <unordered_map>
 #include "Recipe/ingredient.h"
-#include "Recipe/ingredient_list.h"
 #include "Recipe/recipe.h"
 #include "Recipe/rapidxml-1.13/rapidxml.hpp"
 #include "Recipe/rapidxml-1.13/rapidxml_print.hpp"
@@ -75,9 +74,10 @@ void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 	{
 		(*RecipeMem_ptr).currentRecipe = parser.parseFile((*RecipeMem_ptr).filename);
 		
-		#ifdef ENABLE_DEBUG_CONSOLE
+		//#ifdef ENABLE_DEBUG_CONSOLE
 			((*RecipeMem_ptr).currentRecipe).display();
-		#endif
+		//#endif
+		(*UIMem_ptr).readRecipeFlag = 0;
 	}
 	
 	// Write the current recipe
@@ -86,13 +86,9 @@ void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 		/* TODO: test writing */
 		Recipe testRec("./saved_recipes/writingTest.xml", testIng, testDir);
 		parser.writeFile(testRec);
+		(*UIMem_ptr).writeRecipeFlag = 0;
 	}
 	
-	else if((*UIMem_ptr).startDispensingFlag == 1)
-	{
-		std::cout << "Dispensing" << std::endl;
-	}
-		
 		
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "Recipe update task ending\n" << std::endl;
@@ -129,15 +125,12 @@ Recipe Parser::parseFile(std::string fileName)
            
             Ingredient ingredient_obj(amount_d, meas_str, spice_str);
             
-            std::unordered_map<std::string, double>::const_iterator got = SpicetoWeight.find(spice_str);
+            if(ingredient_obj.isSpice())
+				result.addSpice(ingredient_obj);       
  
-			if(got == SpicetoWeight.end())
+			else
 				result.addIngredient(ingredient_obj);
 
-			else
-			{
-				result.addSpice(ingredient_obj);
-			}
         }
         
         for(rapidxml::xml_node<> *i = root_node->first_node("directions")->first_node("step");

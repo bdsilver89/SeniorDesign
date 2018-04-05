@@ -46,6 +46,7 @@ void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 		 * for the ONE motor related to the spice in the 
 		 * SPICES list of the recipe.
 		 * NEED TO CONVERT THE SPICE WEIGHT TO GRAMS
+		 * if its done, set the UI dispensing flag to 0 again
 		 * /
 		
 		
@@ -68,8 +69,8 @@ void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 		(*ControllerMem_ptr).Motor_Enable[0] = 1;
 		(*ControllerMem_ptr).Motor_Enable[1] = 1;
 		
-		(*ControllerMem_ptr).Motor_Speeds[0] = 420;
-		(*ControllerMem_ptr).Motor_Speeds[1] = 370;	
+		(*ControllerMem_ptr).Motor_Speeds[0] = 360;
+		(*ControllerMem_ptr).Motor_Speeds[1] = 420;	
 		
 		
 		// PID Control Loop

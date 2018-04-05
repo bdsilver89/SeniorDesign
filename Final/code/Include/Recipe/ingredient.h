@@ -10,6 +10,7 @@ class Ingredient
 {
 private:
 	double Amount;
+	double Grams;
 	std::string Measurement;
 	std::string Spice;
 
@@ -20,6 +21,17 @@ public:
 	 * [display description]
 	 */
 	void display(void);
+
+	/**
+	 * [calculateGrams description]
+	 */
+	void calculateGrams(void);
+
+	/**
+	 * [isSpice description]
+	 * @return  [description]
+	 */
+	bool isSpice(void);
 
 	/**
 	 * [getAmount description]
