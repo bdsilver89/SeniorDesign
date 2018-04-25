@@ -7,7 +7,7 @@
 // #define ENABLE_DEBUG_CONSOLE
 
 // MACRO for threshold of acceptable weight to continue
-#define THRESHOLD 0
+#define THRESHOLD 2
 
 void Controller_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 {
@@ -92,17 +92,19 @@ void Controller_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 		
 			(*ControllerMem_ptr).Motor_Speeds[(*ControllerMem_ptr).currentContainerIndex] = 360;
 		}
-		/*
+
 		// not the first spice to be dispensed	
 		else
 		{
 			double targetWeight = IngList[(*ControllerMem_ptr).currentRecipeIndex].getGrams();
 			double currentWeight = (*WeightMem_ptr).weight;
 		
-			if ((targetWeight - currentWeight <= THRESHOLD) ||
-				(targetWeight - currentWeight >= THRESHOLD))
+			if ((targetWeight - currentWeight <= THRESHOLD))
 			{
-			
+				(*ControllerMem_ptr).Motor_Enable[(*ControllerMem_ptr).currentContainerIndex] = 0;
+			}
+		}
+			/*
 				// check for next ingredient or move on
 				if((*ControllerMem_ptr).currentRecipeIndex < IngList.size()-1)
 				{

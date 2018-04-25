@@ -5,7 +5,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
-// #define ENABLE_DEBUG_CONSOLE
+#define ENABLE_DEBUG_CONSOLE
 
 /* NOTE:
  * WiringPiI2C has a fun bug for writing to 16 bit registers
@@ -27,8 +27,8 @@ void Weight_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	struct Weight_MemMap* WeightMem_ptr = &((*RTOS_MEM).WeightDriverMem);
 
 	(*WeightMem_ptr).i2caddr    = 0x48;	// Need to connect the ADDR pin to GND
-	(*WeightMem_ptr).ADC_scale  = 975.0/2475.0;	// datasheet gain / real amp gain
-	(*WeightMem_ptr).ADC_offset = 0;	// Need to update in calibrate routine
+	(*WeightMem_ptr).ADC_scale  = (2.0/3.0)*(1000.0/2560.0);	// datasheet gain / real amp gain
+	(*WeightMem_ptr).ADC_offset = (2.0/3.0)*(-100.0);	// Need to update in calibrate routine
 
 	wiringPiSetupSys();
 	sensor = wiringPiI2CSetup((*WeightMem_ptr).i2caddr);
@@ -107,11 +107,13 @@ void Weight_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 	(*WeightMem_ptr).voltage_ADC = 2.048 * double((*WeightMem_ptr).raw_ADC)/2048.0;
 
 	// TODO: Add a scale and offset calibration routine
-	(*WeightMem_ptr).weight = 1000 * (((*WeightMem_ptr).ADC_scale) * ((*WeightMem_ptr).voltage_ADC) + (*WeightMem_ptr).ADC_offset);
+	(*WeightMem_ptr).weight = 1000.0 * ((*WeightMem_ptr).ADC_scale) * ((*WeightMem_ptr).voltage_ADC) + (*WeightMem_ptr).ADC_offset;
 	#ifdef ENABLE_DEBUG_CONSOLE		
 		std::cout << "\tADC raw value: " << std::dec << (*WeightMem_ptr).raw_ADC;
 		std::cout << ", " << std::hex    << (*WeightMem_ptr).raw_ADC << std::endl;
 		std::cout << "\tADC voltage: "   << (*WeightMem_ptr).voltage_ADC << std::endl;
+		std::cout << "\tPredicted mV: "	 << 1000*(*WeightMem_ptr).voltage_ADC/512.0 << std::endl;
+		std::cout << "\tmV/V: " << 1000.0*(*WeightMem_ptr).voltage_ADC/2560.0 << std::endl;
 		std::cout << "\tADC weight: "    << (*WeightMem_ptr).weight << " grams" << std::endl;
 	#endif
 		
