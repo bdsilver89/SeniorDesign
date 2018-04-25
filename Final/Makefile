@@ -11,6 +11,7 @@ SRC =	application/app.cpp		\
 		Recipe/parser.cpp		\
 		Recipe/ingredient.cpp	\
 		Recipe/recipe.cpp		\
+		Config/config.cpp
 
 SRCPATH=./code/src/
 OBJ=$(addprefix $(SRCPATH), $(SRC:.cc=.o))

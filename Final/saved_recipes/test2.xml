@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipeml PUBLIC "-//FormatData//DTD RecipeML 0.5//EN"
+	"http://www.formatdata.com/recipeml.recipeml.dtd">
+<?xml-stylesheet href="dessert1.css" type="text/css"?>
+<recipeml version="0.5">
+	<recipe>
+		<head>
+			<title>thing</title>
+		</head>
+		<ingredients>
+			<ing>
+				<amt>
+					<qty>2</qty>
+					<unit>cups</unit>
+				</amt>
+				<item>salt</item>
+			</ing>
+		</ingredients>
+		<directions>
+			<step>Garnish with pepper</step>
+		</directions>
+	</recipe>
+</recipeml>
+

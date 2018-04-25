@@ -71,6 +71,11 @@ std::vector<Ingredient> Recipe::getIngredients()
 }
 
 
+std::vector<Ingredient> Recipe::getSpices()
+{
+	return Spices;
+}
+
 
 std::vector<std::string> Recipe::getDirections()
 {

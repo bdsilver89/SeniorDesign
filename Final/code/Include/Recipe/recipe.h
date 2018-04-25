@@ -18,7 +18,6 @@
 
 
 
-
 /**
  * [getParsedRecipes description]
  * @return [description]
@@ -83,7 +82,12 @@ public:
      */
 	std::vector<Ingredient> getIngredients();
 
-
+     /**
+     * [getSpices description]
+     * @return  [description]
+     */
+	std::vector<Ingredient> getSpices();
+	
 
      /**
      * [getDirections description]

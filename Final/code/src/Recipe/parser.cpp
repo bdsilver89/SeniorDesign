@@ -26,7 +26,7 @@ void Parser_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	
 	struct Parser_MemMap* RecipeMem_ptr = &((*RTOS_MEM).ParserMem);
 	(*RecipeMem_ptr).Recipe_Path = "./saved_recipes/";
-	(*RecipeMem_ptr).rawfilename = "test.xml";
+	(*RecipeMem_ptr).rawfilename = "test2.xml";
 	(*RecipeMem_ptr).filename = (*RecipeMem_ptr).Recipe_Path + (*RecipeMem_ptr).rawfilename;
 
 

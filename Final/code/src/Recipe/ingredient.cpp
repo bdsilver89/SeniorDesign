@@ -85,3 +85,8 @@ std::string Ingredient::getType(void)
 {
 	return Spice;
 }
+
+double Ingredient::getGrams(void)
+{
+	return Grams;
+}

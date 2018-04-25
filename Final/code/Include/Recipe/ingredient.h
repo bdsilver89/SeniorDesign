@@ -50,6 +50,12 @@ public:
 	 * @return  [description]
 	 */
 	std::string getType(void);
+	
+	/**
+	 * [getGrams description]
+	 * @return  [description]
+	 */
+	double getGrams(void);
 };
 
 #endif

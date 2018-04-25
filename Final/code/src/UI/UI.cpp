@@ -6,7 +6,7 @@
 #include <termios.h>
 
 
-// #define ENABLE_DEBUG_CONSOLE
+// #define ENABLE_DEBUG_CONSOLE 
 
 
 void startRecipeRead(struct RTOS_SHARED_MEM* RTOS_MEM)
@@ -30,6 +30,15 @@ void startDispensing(struct RTOS_SHARED_MEM* RTOS_MEM)
 {
 	struct UI_MemMap* UIMem_ptr = &((*RTOS_MEM).UIMem);
 	(*UIMem_ptr).startDispensingFlag = 1;	
+}
+
+
+void stopCommands(struct RTOS_SHARED_MEM* RTOS_MEM)
+{
+	struct UI_MemMap* UIMem_ptr = &((*RTOS_MEM).UIMem);
+	(*UIMem_ptr).readRecipeFlag = 0;
+	(*UIMem_ptr).writeRecipeFlag = 0;
+	(*UIMem_ptr).startDispensingFlag = 0;
 }
 
 int kbhit()
@@ -63,11 +72,12 @@ void UI_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	(*UIMem_ptr).readRecipeFlag = 0;
 	(*UIMem_ptr).writeRecipeFlag = 0;
 	(*UIMem_ptr).startDispensingFlag = 0;
-	
+	(*UIMem_ptr).changeContainerFlag = 0;
 	
 	std::cout << "Press '0' to start reading a recipe" << std::endl;
 	std::cout << "Press '1' to write the current recipe" << std::endl;
 	std::cout << "Press '2' to start cooking the current recipe" << std::endl;
+	std::cout << "Press '3' to stop" << std::endl;
 
 
 	#ifdef ENABLE_DEBUG_CONSOLE
@@ -112,6 +122,8 @@ void UI_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 	
 	else if (buffer[0] == '2')
 		startDispensing(RTOS_MEM);
+	else if (buffer[0] == '3')
+		stopCommands(RTOS_MEM);
 	
 			
 		

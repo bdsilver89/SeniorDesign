@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-#define NUM_MOTORS 2
+#define NUM_MOTORS 4
 
 struct PID_Controller
 {
@@ -23,6 +23,9 @@ struct PID_Controller
 
 struct Controller_MemMap
 {
+	uint8_t					doneFlag;
+	int8_t					currentRecipeIndex;
+	int8_t					currentContainerIndex;
 	uint8_t					Motor_Enable[NUM_MOTORS];
 	uint16_t				Motor_Speeds[NUM_MOTORS];
 	struct PID_Controller	PID;
