@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE recipeml PUBLIC "-//FormatData//DTD RecipeML 0.5//EN"
 	"http://www.formatdata.com/recipeml.recipeml.dtd">
-<?xml-stylesheet href="dessert1.css" type="text/css"?>
+<?xml-stylesheet href="styles/dessert1.css" type="text/css"?>
 <recipeml version="0.5">
 	<recipe>
 		<head>

@@ -10,39 +10,37 @@
 		<ingredients>
 			<ing>
 				<amt>
-					<qty>1.3</qty>
-					<unit>pounds</unit>
-				</amt>
-				<item>salt</item>
-			</ing>
-			<ing>
-				<amt>
-					<qty>1</qty>
-					<unit>tablespoon</unit>
+					<qty>2</qty>
+					<unit>cups</unit>
 				</amt>
 				<item>garlic powder</item>
 			</ing>
 			<ing>
 				<amt>
-					<qty>23</qty>
-					<unit>ounces</unit>
+					<qty>1</qty>
+					<unit>tablespoons</unit>
 				</amt>
-				<item>thyme flowers</item>
+				<item>salt</item>
 			</ing>
 			<ing>
 				<amt>
-					<qty>3.5</qty>
-					<unit>grams</unit>
+					<qty>2</qty>
+					<unit>shakes</unit>
 				</amt>
-				<item>bbq seasoning</item>
+				<item>pEpPer</item>
+			</ing>
+			<ing>
+				<amt>
+					<qty>4</qty>
+					<unit>pounds</unit>
+				</amt>
+				<item>chili powder</item>
 			</ing>
 		</ingredients>
 		<directions>
-			<step>Combine salt and garlic powder</step>
-			<step>Sprinkle the bbq seasoning over</step>
-			<step>Coat chicken with mixture</step>
-			<step>Grill for 3 minutes on each side</step>
-			<step>Garnish with thyme flowers</step>
+			<step>Combine salt and garlic powder in a bowl</step>
+			<step>Sprinkle with chili powder</step>
+			<step>Garnish with pepper</step>
 		</directions>
 	</recipe>
 </recipeml>
