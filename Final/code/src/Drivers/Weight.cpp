@@ -28,7 +28,7 @@ void Weight_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 
 	(*WeightMem_ptr).i2caddr    = 0x48;	// Need to connect the ADDR pin to GND
 	(*WeightMem_ptr).ADC_scale  = (2.0/3.0)*(1000.0/2560.0);	// datasheet gain / real amp gain
-	(*WeightMem_ptr).ADC_offset = (2.0/3.0)*(-100.0);	// Need to update in calibrate routine
+	(*WeightMem_ptr).ADC_offset = (-2.5);	// Need to update in calibrate routine
 
 	wiringPiSetupSys();
 	sensor = wiringPiI2CSetup((*WeightMem_ptr).i2caddr);
