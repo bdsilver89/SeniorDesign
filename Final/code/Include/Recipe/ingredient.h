@@ -15,6 +15,8 @@ private:
 	std::string Spice;
 
 public:
+	double PourTime;	//in hundreds of milliseconds
+
 	Ingredient(double a, std::string m, std::string t);
 
 	/**
@@ -23,9 +25,9 @@ public:
 	void display(void);
 
 	/**
-	 * [calculateGrams description]
+	 * [calculateSpice description]
 	 */
-	void calculateGrams(void);
+	void calculateSpice(void);
 
 	/**
 	 * [isSpice description]
@@ -56,6 +58,7 @@ public:
 	 * @return  [description]
 	 */
 	double getGrams(void);
+	
 };
 
 #endif

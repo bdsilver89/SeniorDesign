@@ -31,10 +31,11 @@ class Recipe
 private:
     std::string FileName;
     std::vector<Ingredient> Ingredients;
-    std::vector<Ingredient> Spices;
     std::vector<std::string> Directions;
 
 public:
+    std::vector<Ingredient> Spices;
+
 	Recipe() {}
 	
     Recipe(std::string n);
@@ -81,12 +82,6 @@ public:
      * @return  [description]
      */
 	std::vector<Ingredient> getIngredients();
-
-     /**
-     * [getSpices description]
-     * @return  [description]
-     */
-	std::vector<Ingredient> getSpices();
 	
 
      /**

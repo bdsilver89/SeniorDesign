@@ -2,9 +2,12 @@
 #include <iostream>
 #include <unordered_map>
 
+#define TEASPOON_TO_100MS 50
 
 std::unordered_map<std::string, double> SpicetoWeight = {
-	{"salt", 5.69}
+	{"salt", 5.69},
+	{"pepper", 2.3},
+	{"garlic powder", 3.1}
 };
 
 std::unordered_map<std::string, double> MeasuretoTeaspoon = {
@@ -43,7 +46,7 @@ bool Ingredient::isSpice(void)
 	std::unordered_map<std::string, double>::const_iterator got = SpicetoWeight.find(Spice);
 	if(got != SpicetoWeight.end())
 	{
-		calculateGrams();
+		calculateSpice();
 		return true;
 	}
 	else
@@ -53,16 +56,18 @@ bool Ingredient::isSpice(void)
 
 
 
-void Ingredient::calculateGrams(void)
+void Ingredient::calculateSpice(void)
 {
 	std::cout << Spice << std::endl;
 	std::cout << Measurement << std::endl;
 	std::unordered_map<std::string, double>::const_iterator got1 = SpicetoWeight.find(Spice);
 	std::unordered_map<std::string, double>::const_iterator got2 = MeasuretoTeaspoon.find(Measurement);
 	if(got1 != SpicetoWeight.end() && got2 != MeasuretoTeaspoon.end())
-		Grams = Amount * got1->second * got2->second;
- 
-	std::cout << Grams << std::endl;
+	{
+		Grams    = Amount * got1->second * got2->second;
+		PourTime = Amount * got2->second * TEASPOON_TO_100MS;
+		std::cout << PourTime << std::endl;
+	}
 }
 
 
@@ -90,3 +95,4 @@ double Ingredient::getGrams(void)
 {
 	return Grams;
 }
+
