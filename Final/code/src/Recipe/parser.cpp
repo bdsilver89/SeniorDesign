@@ -74,9 +74,9 @@ void Parser_Update(struct RTOS_SHARED_MEM* RTOS_MEM, uint32_t RTOSTime)
 	{
 		(*RecipeMem_ptr).currentRecipe = parser.parseFile((*RecipeMem_ptr).filename);
 		
-		//#ifdef ENABLE_DEBUG_CONSOLE
+		#ifdef ENABLE_DEBUG_CONSOLE
 			((*RecipeMem_ptr).currentRecipe).display();
-		//#endif
+		#endif
 		(*UIMem_ptr).readRecipeFlag = 0;
 	}
 	
