@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">Welcome to the AutoSpice Home Page!</h1>
+          <p>This is a network for users to get recipes and learn more about AutoSpice!</p>
+          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Recipe Portal</h2>
+            <p>We are constantly releasing new recipes for you to try!In comming updates you can share your recipes with other users.</p>
+            <p><a class="btn btn-secondary" href="/recipes" role="button">View details &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Updates</h2>
+            <p>Check in for future updates to AutoSpice.</p>
+            <p><a class="btn btn-secondary" href="/info" role="button">View details &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>About Us</h2>
+            <p>We are very proud about AutoSpice. Get updates about each member of the team.</p>
+            <p><a class="btn btn-secondary" href="/about" role="button">View details &raquo;</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
+
+    </main>
+
+{% endblock %}

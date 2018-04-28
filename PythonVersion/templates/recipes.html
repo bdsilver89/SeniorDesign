@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">AutoSpice Recipe Portal</h1>
+          <p>A place for you to try out recipes with your AutoSpice. It's as easy as a click of a button!</p>
+        </div>
+      </div>
+
+    <ul class="list-group">
+        {% for recipe in recipes %}
+            <li class="list-group-item"><a href="recipe/{{recipe.id}}">{{recipe.title}}</a></li>
+        {% endfor %}
+    </ul>
+
+    </main>
+
+{% endblock %}
