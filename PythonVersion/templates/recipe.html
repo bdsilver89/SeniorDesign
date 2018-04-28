@@ -4,11 +4,24 @@
 	<main role="main">
 
 		<h1>{{name}}</h1>
+		<p>{{description}}</p>
 		
+		<h2>Ingredients</h2>
+		<ul>
+			{% for i in ingredients %}
+				<li>
+					{% for e in i %}
+					{{e}}
+					{% endfor %}		
+				</li>
+			{% endfor %}		
+		</ul>
+		
+		<h2>Directions</h2>
 		<ol>
-        {% for d in directions %}
-			<li>{{d}}</li>
-        {% endfor %}
+			{% for d in directions %}
+				<li>{{d}}</li>
+			{% endfor %}
 		</ol>
 
 

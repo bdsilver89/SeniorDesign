@@ -12,7 +12,7 @@ def index():
 
 @app.route('/recipes')
 def recipes():
-    return render_template('recipes.html', recipes=Recipes)
+	return render_template('recipes.html', recipes=Recipes)
 
 
 @app.route('/recipe/<string:name>/', methods=['GET', 'POST'])
@@ -21,10 +21,12 @@ def recipe(name):
 	for r in Recipes:
 		if r['name'] == name:
 			directions = r['directions']
+			description = r['description']
+			ingredients = r['ingredients']
 			if request.method == 'POST':
 				val = request.form['text']
 				startDispensing(name)
-	return render_template('recipe.html', name=name, directions=directions)
+	return render_template('recipe.html', name=name, description=description, directions=directions, ingredients=ingredients)
 		
 
 

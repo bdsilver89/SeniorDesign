@@ -6,6 +6,7 @@
 	<recipe>
 		<head>
 			<title>My Second Recipe</title>
+			<description>This is the second recipe we released for use with AutoSpice. Please enjoy it!</description>
 		</head>
 		<ingredients>
 			<ing>

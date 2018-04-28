@@ -12,8 +12,15 @@ def RecipeLib():
 			R.parseXML()
 			d = {}
 			d['name'] = R.getName()
-			#d['ingredients'] = R.getIngredients()
 			d['directions'] = R.getDirections()
+			d['description'] = R.getDescription()
+			
+			ingList = []
+			for i in R.getIngredients():
+				ingList.append([i.getQty(), i.getUnit(), i.getType()])
+			print(ingList)
+			d['ingredients'] = ingList
+						
 			recipes.append(d)
 			RecipeObj.append(R)
 	return recipes
