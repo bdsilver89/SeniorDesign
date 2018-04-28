@@ -79,7 +79,6 @@ void UI_Init(struct RTOS_SHARED_MEM* RTOS_MEM, uint8_t* err)
 	std::cout << "Press '2' to start cooking the current recipe" << std::endl;
 	std::cout << "Press '3' to stop" << std::endl;
 
-
 	#ifdef ENABLE_DEBUG_CONSOLE
 		std::cout << "UI init task ending\n" << std::endl;
 	#endif

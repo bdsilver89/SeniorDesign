@@ -3,13 +3,10 @@ import Ingredient as I
 import Motor as M
 
 class Recipe:
-	path = ''
-	name = ''
-	ingredients = []
-	directions = []
-	
 	def __init__(self, path):
 		self.path = path
+		self.ingredients = []
+		self.directions = []
 		 
 	def parseXML(self):
 		tree = ET.ElementTree(file = self.path)

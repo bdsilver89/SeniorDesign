@@ -11,7 +11,7 @@ SRC =	application/app.cpp		\
 		Recipe/parser.cpp		\
 		Recipe/ingredient.cpp	\
 		Recipe/recipe.cpp		\
-		Config/config.cpp
+		Config/config.cpp		\
 
 SRCPATH=./code/src/
 OBJ=$(addprefix $(SRCPATH), $(SRC:.cc=.o))
@@ -22,7 +22,7 @@ CPPFLAGS+= -I $(INC) -std=c++11 -lrt -lwiringPi -Wno-psabi
 
 
 all: $(OBJ)
-	@g++ $(CPPFLAGS) $(OBJ) -o $(NAME)
+	g++ $(CPPFLAGS) $(OBJ) -o $(NAME)z
 
 clean:
 	@-$(RM) *~

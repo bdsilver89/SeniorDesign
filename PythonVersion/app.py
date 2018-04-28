@@ -2,15 +2,9 @@ from __future__ import division
 import time
 
 from Tkinter import Tk
-
-import Recipe
 import GUI
+import Recipe
 
 root = Tk()
-my_gui = GUI.GUI(root)
+my_gui = GUI.Application(root)
 root.mainloop()
-
-#R = Recipe.Recipe('./saved_recipes/test2.xml')
-#R.parseXML()
-#R.display()
-#R.dispense()

@@ -1,7 +1,8 @@
-from Tkinter import Tk, Label, Button, Entry, StringVar, IntVar, END, W, E
+from Tkinter import *
 
+import Recipe
 
-class GUI:
+class Application:
 	def __init__(self, master):
 		self.master = master
 		pad = 3
@@ -10,4 +11,16 @@ class GUI:
 			master.winfo_screenwidth()-pad, master.winfo_screenheight()-pad))
 		master.title("AutoSpice")
 	
+		v = StringVar()
+		self.recipe_textEntry = Entry(master, textvariable=v)
+		self.recipe_textEntry.pack()
 		
+		
+		
+		
+		
+		
+#R = Recipe.Recipe('./saved_recipes/test2.xml')
+#R.parseXML()
+#R.display()
+#R.dispense()
