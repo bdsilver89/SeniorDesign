@@ -5,7 +5,7 @@
 <recipeml version="0.5">
 	<recipe>
 		<head>
-			<title>thing</title>
+			<title>My First Recipe</title>
 		</head>
 		<ingredients>
 			<ing>
@@ -27,7 +27,7 @@
 					<qty>2</qty>
 					<unit>pinches</unit>
 				</amt>
-				<item>pEpPer</item>
+				<item>pepper</item>
 			</ing>
 			<ing>
 				<amt>

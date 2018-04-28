@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import time
 import Ingredient as I
 import Motor as M
 
@@ -7,6 +8,7 @@ class Recipe:
 		self.path = path
 		self.ingredients = []
 		self.directions = []
+		self.motors = M.Motor()
 		 
 	def parseXML(self):
 		tree = ET.ElementTree(file = self.path)
@@ -44,8 +46,21 @@ class Recipe:
 		print('')
 		for d in self.directions:
 			print(d)
+
+	def getName(self):
+		return self.name
+		
+	def getIngredients(self):
+		 return self.ingredients
+		 
+	def getDirections(self):
+		return self.directions
 			
 	def	dispense(self):
-		print("dispensing")	
+		self.motors.spin(0, 355)
+		time.sleep(5)
+		self.motors.stop(0)
+	
+
 
 

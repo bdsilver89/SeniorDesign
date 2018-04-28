@@ -1,25 +1,25 @@
+import os
+import Recipe
+
+RecipeObj = []
+
 def RecipeLib():
-    recipes = [
-        {
-            'id': 1,
-            'title': 'Article One',
-            'body': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eius quos officiis sint rerum voluptatum eligendi dicta deleniti totam molestias. Ipsa blanditiis illo neque, tenetur eius inventore officiis nesciunt aspernatur.',
-            'author': 'brian',
-            'create_date': '04-25-2017'
-        },
-        {
-            'id': 2,
-            'title': 'Article Two',
-            'body': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eius quos officiis sint rerum voluptatum eligendi dicta deleniti totam molestias. Ipsa blanditiis illo neque, tenetur eius inventore officiis nesciunt aspernatur.',
-            'author': 'jason',
-            'create_date': '04-25-2017'
-        },
-        {
-            'id': 3,
-            'title': 'Article Three',
-            'body': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eius quos officiis sint rerum voluptatum eligendi dicta deleniti totam molestias. Ipsa blanditiis illo neque, tenetur eius inventore officiis nesciunt aspernatur.',
-            'author': 'dan',
-            'create_date': '04-25-2017'
-        }
-    ]
-    return recipes
+	recipes = []
+	for file in os.listdir("./saved_recipes"):
+		if file.endswith(".xml"):
+			path = os.path.join("./saved_recipes", file)
+			R = Recipe.Recipe(path)
+			R.parseXML()
+			d = {}
+			d['name'] = R.getName()
+			#d['ingredients'] = R.getIngredients()
+			d['directions'] = R.getDirections()
+			recipes.append(d)
+			RecipeObj.append(R)
+	return recipes
+
+
+def startDispensing(name):
+	for r in RecipeObj:
+		if r.getName() == name:
+			r.dispense()

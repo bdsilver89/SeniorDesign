@@ -1,11 +1,23 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <h1>{{id}}</h1>
-    <form method="post" action="">
-       <p>Press the button to start dispensing this in your AutoSpice!</p>
-       <p><input type="text" name="text"</p>
-       <p><input class="btn btn-secondary" type="submit" value="Start" </p>
-    </form>
+	<main role="main">
+
+		<h1>{{name}}</h1>
+		
+		<ol>
+        {% for d in directions %}
+			<li>{{d}}</li>
+        {% endfor %}
+		</ol>
+
+
+		<form method="post" action="">
+		   <p>Press the button to start dispensing this in your AutoSpice!</p>
+		   <p><input type="text" name="text"</p>
+		   <p><input class="btn btn-secondary" type="submit" value="Start" </p>
+		</form>
+	</main>
+  
 
 {% endblock %}

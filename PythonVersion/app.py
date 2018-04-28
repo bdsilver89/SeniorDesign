@@ -1,8 +1,5 @@
-#from Tkinter import Tk
-#import GUI
-#import Recipe
 from flask import Flask, render_template, request
-from data import RecipeLib
+from data import RecipeLib, startDispensing
 
 app = Flask(__name__)
 
@@ -18,12 +15,17 @@ def recipes():
     return render_template('recipes.html', recipes=Recipes)
 
 
-@app.route('/recipe/<string:id>/', methods=['GET', 'POST'])
-def recipe(id):
-    if request.method == 'POST':
-        val = request.form['text']
-        print("Submission: " + val)
-    return render_template('recipe.html', id=id)
+@app.route('/recipe/<string:name>/', methods=['GET', 'POST'])
+def recipe(name):
+	directions = []
+	for r in Recipes:
+		if r['name'] == name:
+			directions = r['directions']
+			if request.method == 'POST':
+				val = request.form['text']
+				startDispensing(name)
+	return render_template('recipe.html', name=name, directions=directions)
+		
 
 
 
@@ -31,9 +33,3 @@ def recipe(id):
 
 if __name__ == '__main__':
    app.run(debug = True)
-
-'''
-root = Tk()
-my_gui = GUI.Application(root)
-root.mainloop()
-'''
