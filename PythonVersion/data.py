@@ -18,7 +18,6 @@ def RecipeLib():
 			ingList = []
 			for i in R.getIngredients():
 				ingList.append([i.getQty(), i.getUnit(), i.getType()])
-			print(ingList)
 			d['ingredients'] = ingList
 						
 			recipes.append(d)
