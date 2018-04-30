@@ -3,35 +3,18 @@ from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
 from functools import wraps
+
 from data import RecipeLib, startDispensing
 
 
-'''
-Some MySQL commands to run:
-1. Check the database for users:
-	SELECT * from users;
-	
-2. Delete a user given a parameter:
-	DELETE FROM users WHERE id=1
-	
-3. Reset the auto_increment value for user_id (use for testing)
-	ALTER TABLE users AUTO_INCREMENT = 0;
-'''
-
-
-
 app = Flask(__name__)
-
-# Config MySQL
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_USER'] = 'superuser'
 app.config['MYSQL_PASSWORD'] = 'password'
 app.config['MYSQL_DB'] = 'mySeniorDesign'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
-# init MySQL
 mysql = MySQL(app)
-
 
 Recipes = RecipeLib()
 
@@ -45,6 +28,7 @@ def index():
 @app.route('/recipes')
 def recipes():
 	return render_template('recipes.html', recipes=Recipes)
+
 
 # Recipe
 @app.route('/recipe/<string:name>/', methods=['GET', 'POST'])
@@ -82,19 +66,19 @@ def register():
 		email = form.email.data
 		username = form.username.data
 		password = sha256_crypt.encrypt(str(form.password.data))
-		
-		# create cursor
+
+		# Create cursor
 		cur = mysql.connection.cursor()
-
-		# execute query
+		
+		# Execute
 		cur.execute("INSERT INTO users(name, email, username, password) VALUES(%s, %s, %s, %s)", (name, email, username, password))
-
-		# commit to DB
+		
+		# Commit
 		mysql.connection.commit()
-		
-		# close connection
+
+		# Close
 		cur.close()
-		
+
 		flash('You are now registered and can log in', 'success')
 
 		return redirect(url_for('login'))	
@@ -141,6 +125,7 @@ def login():
 		
 	return render_template('login.html')
 
+
 # Check if user is logged out
 def is_logged_in(f):
 	@wraps(f)
@@ -152,12 +137,14 @@ def is_logged_in(f):
 			return redirect(url_for('login'))
 	return wrap
 
+
 # Logout
 @app.route('/logout')
 def logout():
 	session.clear()
 	flash('You are now logged out', 'success')
 	return redirect(url_for('login'))
+	
 	
 # Dashboard
 @app.route('/dashboard')
@@ -168,6 +155,6 @@ def dashboard():
 	
 
 if __name__ == '__main__':
-   app.secret_key = 'secret123'
+   app.config['SECRET_KEY'] = 'senior design secret'
    app.run(debug = True)
    
