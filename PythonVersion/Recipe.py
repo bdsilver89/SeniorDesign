@@ -25,9 +25,9 @@ MeasureToTeaspoon = {
 class SpiceContainers:
 	def __init__(self):
 		self.containers = {
-			'salt' : 0,
+			'garlic powder' : 0,
 			'pepper' : 1,
-			'garlic powder' : 2
+			'parsley' : 2
 		}
 		
 	def addSpice(self, key, value):

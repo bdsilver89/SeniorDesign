@@ -59,7 +59,7 @@ def recipe(name):
 			description = r['description']
 			ingredients = r['ingredients']
 			if request.method == 'POST':
-				readDirection(name, 0)
+				startDispensing(name)
 	return render_template('recipe.html', name=name, description=description, directions=directions, ingredients=ingredients)
 
 
