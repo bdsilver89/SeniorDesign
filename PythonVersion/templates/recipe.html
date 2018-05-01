@@ -18,18 +18,45 @@
 		</ul>
 		
 		<h2>Directions</h2>
-		<ol>
+		{% if session.logged_in %}
+			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+				<div class="btn-group-vertical" role="group" aria-label="First group">
+					<ol>
+		{% else %}
+			<ol>
+		{% endif %}
 			{% for d in directions %}
-				<li>{{d}}</li>
+				{% if session.logged_in %}
+					<li>
+						<div class="row">
+						  <div class="col-md-6">
+							  <p><a href="/direction/{{name}}/{{loop.index}}" name ="buttonList" class="btn btn-primary">Read Step</a></p>
+						  </div>
+						  <div class="col-md-6">
+							<p>{{d}}</p>
+						  </div>
+						</div>
+					</li>
+				{% else %}
+					<li>{{d}}</li>
+				{% endif %}
 			{% endfor %}
-		</ol>
-
-
+		{% if session.logged_in %}
+					</ol>
+				</div>
+			</div>
+		{% else %}
+			</ol>
+		{% endif %}
+	
+	
+		{% if session.logged_in %}
+		<p><br></p>
 		<form method="post" action="">
 		   <p>Press the button to start dispensing this in your AutoSpice!</p>
-		   <p><input type="text" name="text"</p>
-		   <p><input class="btn btn-secondary" type="submit" value="Start" </p>
+		   <p><input class="btn btn-primary" type="submit" value="Dispense"</p>
 		</form>
+		{% endif %}
 	</main>
   
 

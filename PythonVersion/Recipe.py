@@ -1,6 +1,8 @@
 import xml.etree.ElementTree as ET
 import time
 import Adafruit_PCA9685
+from gtts import gTTS
+import os
 
 
 SpiceDict = {
@@ -107,9 +109,13 @@ class Recipe:
 		self.description = ""
 		self.ingredients = []
 		self.spices = []
+		self.otherIngredients = []
 		self.directions = []
 		self.motors = Motor()
 		self.Vials = SpiceContainers()
+		
+		
+		
 		 
 	def parseXML(self):
 		tree = ET.ElementTree(file = self.path)
@@ -134,6 +140,7 @@ class Recipe:
 						self.ingredients.append(i)
 					else:
 						self.ingredients.append(i)
+						self.otherIngredients.append(i)
 					
 			elif(section.tag == 'directions'):
 				dirList = []
@@ -156,6 +163,9 @@ class Recipe:
 	def getName(self):
 		return self.name
 		
+	def getNonSpices(self):
+		return self.otherIngredients
+		
 	def getIngredients(self):
 		 return self.ingredients
 			 
@@ -173,4 +183,9 @@ class Recipe:
 				time.sleep(s.getTime())
 				self.motors.stop(index)
 		self.motors.allStop()
-
+	
+	def readDirection(self, d):
+		tts = gTTS(text=self.directions[d], lang='en')
+		path = './directions/' + self.name.replace(" ","_") + '_step_' + str(d) + '.mp3'
+		tts.save(path)
+		os.system('mpg321 ' + path)

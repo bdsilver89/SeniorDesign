@@ -29,3 +29,8 @@ def startDispensing(name):
 	for r in RecipeObj:
 		if r.getName() == name:
 			r.dispense()
+			
+def readDirection(name, index):
+	for r in RecipeObj:
+		if r.getName() == name:
+			r.readDirection(index)

@@ -4,8 +4,15 @@ from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
 from functools import wraps
 
-from data import RecipeLib, startDispensing
+from data import RecipeLib, startDispensing, readDirection
 
+'''
+To Run:
+sudo /etc/init.d/mysql stop
+sudo -s
+mysqld_safe --skip-grant-tables &
+
+'''
 
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
@@ -17,6 +24,18 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 Recipes = RecipeLib()
+
+# Check if user is logged out
+def is_logged_in(f):
+	@wraps(f)
+	def wrap(*args, **kwargs):
+		if 'logged_in' in session:
+			return f(*args, **kwargs)
+		else:
+			flash('Unauthorized, Please login', 'danger')
+			return redirect(url_for('login'))
+	return wrap
+
 
 # index page
 @app.route('/')
@@ -40,9 +59,16 @@ def recipe(name):
 			description = r['description']
 			ingredients = r['ingredients']
 			if request.method == 'POST':
-				val = request.form['text']
-				startDispensing(name)
+				readDirection(name, 0)
 	return render_template('recipe.html', name=name, description=description, directions=directions, ingredients=ingredients)
+
+
+# Read direction
+@app.route('/direction/<string:name>/<string:step>')
+@is_logged_in
+def direction(name, step):
+	readDirection(name, int(step)-1)
+	return redirect(url_for('recipe', name=name))	
 
 
 # Register form class
@@ -125,17 +151,6 @@ def login():
 		
 	return render_template('login.html')
 
-
-# Check if user is logged out
-def is_logged_in(f):
-	@wraps(f)
-	def wrap(*args, **kwargs):
-		if 'logged_in' in session:
-			return f(*args, **kwargs)
-		else:
-			flash('Unauthorized, Please login', 'danger')
-			return redirect(url_for('login'))
-	return wrap
 
 
 # Logout
